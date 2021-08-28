@@ -41,8 +41,8 @@ function App() {
           }
         >
           <Switch>
-            <Route exact path="/" component={HomeView} />
-            <Route exact path="/account/signin" component={SignInView} />
+            <Route exact path="/" component={SignInView} />
+            <Route exact path="/account/signin" component={HomeView} />
             <Route exact path="/account/signup" component={SignUpView} />
             <Route
               exact
