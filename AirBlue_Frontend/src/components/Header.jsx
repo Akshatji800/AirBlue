@@ -22,7 +22,7 @@ const Header = () => {
               <Link to="/">
                 <img
                   alt="logo"
-                  src="../../images/logo.webp"
+                  src="../../images/AirBlue.png"
                 />
               </Link>
             </div>

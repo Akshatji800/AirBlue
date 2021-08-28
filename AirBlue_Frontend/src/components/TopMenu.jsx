@@ -7,7 +7,7 @@ const TopMenu = () => {
       <nav className="navbar navbar-expand-lg navbar-dark bg-dark p-0">
         <div className="container-fluid">
           <Link className="navbar-brand" to="/">
-            E-Commerce
+            AirBlue
           </Link>
           <button
             className="navbar-toggler"

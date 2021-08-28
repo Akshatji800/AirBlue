@@ -63,13 +63,10 @@ const Footer = () => {
         <div className="container-fluid bg-dark text-white">
           <div className="row ">
             <div className="col-md-3 py-3">
-              <div className="h6">Company Name</div>
+              <div className="h6">AirBlue</div>
               <hr />
               <p>
-                Lorem Ipsum is simply dummy text of the printing and typesetting
-                industry. Lorem Ipsum has been the industry's standard dummy
-                text ever since the 1500s, when an unknown printer took a galley
-                of type and scrambled it to make a type specimen book.
+                A website to make use of earned miles to shop for daily use products.
               </p>
             </div>
             <div className="col-md-3 py-3">
@@ -168,17 +165,17 @@ const Footer = () => {
               <div className="h6">Address</div>
               <hr />
               <address>
-                <strong>Twitter, Inc.</strong>
+                <strong>AirBlue, Inc.</strong>
                 <br />
                 1355 Market St, Suite 900
                 <br />
                 San Francisco, CA 94103
                 <br />
-                <abbr title="Phone">P:</abbr> (123) 456-7890
+                <abbr title="Phone">Phone Number -</abbr> (123) 456-7890
               </address>
               <div className="h6">Customer Care</div>
               <hr />
-              <IconTelephone /> +1800 100 1000
+              <IconTelephone /> +91 98308 14358
               <br />
               <IconEnvelope /> info@email.com
             </div>
