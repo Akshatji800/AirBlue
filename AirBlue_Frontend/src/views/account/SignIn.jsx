@@ -18,8 +18,6 @@ class SignInView extends Component {
                 className="img-fluid"
               />
             </Link>
-            <Link to="/">
-            </Link>
           </div>
           <div className="col-md-6 p-3">
             <h4 className="text-center">Sign In</h4>

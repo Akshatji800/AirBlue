@@ -33,8 +33,6 @@ function App() {
   return (
     <BrowserRouter>
       <React.Fragment>
-        <Header />
-        <TopMenu />
         <Suspense
           fallback={
             <div className="text-white text-center mt-3">Loading...</div>
@@ -42,8 +40,12 @@ function App() {
         >
           <Switch>
             <Route exact path="/" component={SignInView} />
-            <Route exact path="/account/signin" component={HomeView} />
             <Route exact path="/account/signup" component={SignUpView} />
+
+            <>
+            <Header />
+            <TopMenu />
+            <Route exact path="/account/signin" component={HomeView} />
             <Route
               exact
               path="/account/forgotpassword"
@@ -69,6 +71,8 @@ function App() {
             <Route exact path="/blog/detail" component={BlogDetailView} />
             <Route exact path="/500" component={InternalServerErrorView} />
             <Route component={NotFoundView} />
+            </>
+            
           </Switch>
         </Suspense>
         <Footer />
