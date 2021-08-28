@@ -2,6 +2,7 @@
 import graphene
 from graphene_django import DjangoObjectType
 from graphene.types.generic import GenericScalar
+from graphql_auth import mutations
 
 from airblue.models import (
     Product,
@@ -144,8 +145,11 @@ class Query(graphene.ObjectType):
 
         except Product.DoesNotExist:
             return None
+class Mutation(graphene.ObjectType):
+    token_auth = mutations.ObtainJSONWebToken.Field()
 
 
 schema = graphene.Schema(
     query=Query,
+    mutation=Mutation,
 )
