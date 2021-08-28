@@ -5,6 +5,7 @@ from graphene.types.generic import GenericScalar
 from graphql_auth import mutations
 
 from airblue.models import (
+    Miles,
     Product,
     ProductImage,
     ProductRemains,
@@ -62,6 +63,14 @@ class ProductImageType(DjangoObjectType):
             "url",
         )
 
+class MilesType(DjangoObjectType):
+    class Meta:
+        model = Miles
+        fields = ("user", "miles")
+
+class MilesInput(graphene.InputObjectType):
+    user=graphene.String()
+    miles = graphene.Int()
 
 class ProductRemainsType(DjangoObjectType):
 
@@ -118,6 +127,15 @@ class Query(graphene.ObjectType):
         id=graphene.Int(required=True),
     )
 
+    all_miles = graphene.List(MilesType, user=graphene.String(required=True))
+
+    def resolve_all_miles(root, info, user):
+        try:
+            return Miles.objects.filter(user__username=user).all()
+        except:
+            return None
+
+
     def resolve_all_products(root, info, page=1):
 
         return slice_products(
@@ -145,8 +163,23 @@ class Query(graphene.ObjectType):
 
         except Product.DoesNotExist:
             return None
+
+class UpdateMiles(graphene.Mutation):
+    class Arguments:
+        input = MilesInput(required=True)
+
+    miles_details = graphene.Field(MilesType)
+
+    @staticmethod
+    def mutate(root, info, input=None):
+        miles_details = Miles.objects.get(user__username = input.user)
+        miles_details.miles = input.miles
+        miles_details.save()
+        return UpdateMiles(miles_details=miles_details)
+
 class Mutation(graphene.ObjectType):
     token_auth = mutations.ObtainJSONWebToken.Field()
+    update_miles = UpdateMiles.Field()
 
 
 schema = graphene.Schema(
