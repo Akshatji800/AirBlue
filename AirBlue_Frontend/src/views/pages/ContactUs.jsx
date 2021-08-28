@@ -32,25 +32,25 @@ class ContactUsView extends Component {
               <div className="card-body">
                 <h6 className="card-title border-bottom border-dark pb-2">Head Office</h6>
                 <address>
-                  <strong>Twitter, Inc.</strong>
+                  <strong>AirBlue, Inc.</strong>
                   <br />
                   1355 Market St, Suite 900
                   <br />
                   San Francisco, CA 94103
                   <br />
                   <IconTelephoneFill className="i-va" />{" "}
-                  <abbr title="Phone">P:</abbr> (123) 456-7890
+                  <abbr title="Phone">Phone Number:</abbr> (123) 456-7890
                 </address>
                 <h6 className="card-title border-bottom border-dark pb-2">Development Office</h6>
                 <address>
-                  <strong>Twitter, Inc.</strong>
+                  <strong>AirBlue, Inc.</strong>
                   <br />
                   1355 Market St, Suite 900
                   <br />
                   San Francisco, CA 94103
                   <br />
                   <IconTelephoneFill className="i-va" />{" "}
-                  <abbr title="Phone">P:</abbr> (123) 456-7890
+                  <abbr title="Phone">Phone Number:</abbr> (123) 456-7890
                 </address>
               </div>
             </div>
