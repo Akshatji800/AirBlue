@@ -46,3 +46,12 @@
 .i-va{
   vertical-align: -0.125em;
 }
+
+.miles{
+  padding: 5px;
+  margin-left: 10px;
+  box-shadow: 1px 1px;
+  background-color: yellow;
+  border-radius: 10px;
+  height: 30px;
+}
