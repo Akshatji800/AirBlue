@@ -17,7 +17,7 @@ import {
   faFacebookF,
   faGoogle,
 } from "@fortawesome/free-brands-svg-icons";
-import { ReactComponent as IconPhoneFill } from "bootstrap-icons/icons/phone-fill.svg";
+import { ReactComponent as IconPhoneFill } from "bootstrap-icons/icons/envelope.svg";
 import { ReactComponent as IconShieldLockFill } from "bootstrap-icons/icons/shield-lock-fill.svg";
 
 const SignInForm = (props) => {
@@ -31,9 +31,9 @@ const SignInForm = (props) => {
       <Field
         name="mobileNo"
         type="number"
-        label="Mobile no"
+        label="Email"
         component={renderFormGroupField}
-        placeholder="Mobile no without country code"
+        placeholder="Enter your registered email"
         icon={IconPhoneFill}
         validate={[required, maxLengthMobileNo, minLengthMobileNo, digit]}
         required={true}
