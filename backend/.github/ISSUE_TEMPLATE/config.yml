@@ -1,0 +1,5 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Create default issue
+    url: https://github.com/feya-bilyzna/backend//issues/new?projects=feya-bilyzna/2&assignee=lifearoundfreaks
+    about: Create issue filled by default
