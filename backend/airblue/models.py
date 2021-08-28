@@ -3,7 +3,23 @@ from django.contrib.auth.models import User
 from django.utils.translation import gettext
 from django.utils.translation import gettext_lazy as _
 
+class Miles(models.Model):
 
+    user = models.ForeignKey(
+        User,
+        null=True,
+        on_delete=models.CASCADE,
+        verbose_name=_('User'),
+    )
+    miles = models.PositiveIntegerField(
+        verbose_name=_('Miles'),default=1,
+    )
+
+    class Meta:
+
+        verbose_name = _('Miles')
+        verbose_name_plural = _('Miles')
+    
 class Category(models.Model):
 
     name = models.CharField(

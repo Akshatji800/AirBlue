@@ -7,6 +7,7 @@ from .models import (
     ProductImage,
     OrderProduct,
     Category,
+    Miles
 )
 from django.utils.translation import gettext_lazy as _
 from django import forms
@@ -111,3 +112,7 @@ class OrderProductAdmin(admin.ModelAdmin):
 class CategoryAdmin(admin.ModelAdmin):
     list_display = ('name', 'parent_prefix')
     search_fields = ('name',)
+
+@admin.register(Miles)
+class MilesAdmin(admin.ModelAdmin):
+ pass
