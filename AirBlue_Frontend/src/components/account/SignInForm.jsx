@@ -23,7 +23,7 @@ import {
   faFacebookF,
   faGoogle,
 } from "@fortawesome/free-brands-svg-icons";
-import { ReactComponent as IconPhoneFill } from "bootstrap-icons/icons/envelope.svg";
+import { ReactComponent as IconPhoneFill } from "bootstrap-icons/icons/envelope-fill.svg";
 import { ReactComponent as IconShieldLockFill } from "bootstrap-icons/icons/shield-lock-fill.svg";
 
 const SignInForm = (props) => {
