@@ -37,12 +37,11 @@ function App() {
           fallback={
             <div className="text-white text-center mt-3">Loading...</div>
           }
-        >
+        > 
           <Switch>
             <Route exact path="/" component={SignInView} />
-            <Route exact path="/account/signup" component={SignUpView} />
-
-            <>
+            <Route exact path="/account/signup" component={SignUpView} /> 
+          <>
             <Header />
             <TopMenu />
             <Route exact path="/account/signin" component={HomeView} />
@@ -70,9 +69,8 @@ function App() {
             <Route exact path="/blog" component={BlogView} />
             <Route exact path="/blog/detail" component={BlogDetailView} />
             <Route exact path="/500" component={InternalServerErrorView} />
-            <Route component={NotFoundView} />
-            </>
-            
+          </>
+          <Route component={NotFoundView} />
           </Switch>
         </Suspense>
         <Footer />
