@@ -1,0 +1,58 @@
+Metadata-Version: 2.1
+Name: graphene-graphiql-explorer
+Version: 0.0.1
+Summary: A Django app that adds graphiql explorer to the graphiql view
+Home-page: https://github.com/creimers/graphene-graphiql-explorer
+Author: creimers
+Author-email: christoph@superservice-international.com
+License: MIT
+Platform: UNKNOWN
+Classifier: Environment :: Web Environment
+Classifier: Framework :: Django
+Classifier: Intended Audience :: Developers
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Classifier: Programming Language :: Python
+Classifier: Programming Language :: Python :: 3 :: Only
+Classifier: Programming Language :: Python :: 3.6
+Classifier: Programming Language :: Python :: 3.7
+Classifier: Programming Language :: Python :: 3.8
+Classifier: Topic :: Internet :: WWW/HTTP
+Classifier: Topic :: Internet :: WWW/HTTP :: Dynamic Content
+Description-Content-Type: text/markdown
+
+# graphene graphiql explorer
+
+😎This django app adds the [ graphiql explorer ](https://github.com/OneGraph/graphiql-explorer) the graphene's graphiql view.
+
+## installation
+
+`pip install https://github.com/creimers/graphene-graphiql-explorer/archive/master.zip`
+
+Yes, I will eventually publish this on pypi.
+
+## setup
+
+Add `graphene_graphiql_explorer` to your `INSTALLED_APPS`.
+
+Override the default graphene graphiql template in your `urls.py`:
+
+```python
+from graphene_django.views import GraphQLView
+
+GraphQLView.graphiql_template = "graphene_graphiql_explorer/graphiql.html"
+
+urlpatterns = [
+    # ...
+    url(
+        r"^graphql/$",
+        GraphQLView.as_view(graphiql=True),
+        name="graphql",
+    ),
+    # ...
+]
+```
+
+Don't forget to collect those static files.
+
+

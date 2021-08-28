@@ -87,7 +87,7 @@ const SignUpForm = (props) => {
       >
         Create
       </button>
-      <Link className="float-left" to="/account/signin" title="Sign In">
+      <Link className="float-left" to="/" title="Sign In">
         Sign In
       </Link>
       <Link

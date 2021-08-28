@@ -19,7 +19,7 @@ const Header = () => {
         <div className="container-fluid">
           <div className="row g-3">
             <div className="col-md-3 text-center">
-              <Link to="/">
+              <Link to="/home">
                 <img
                   alt="logo"
                   src="../../images/AirBlue.png"

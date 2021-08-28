@@ -44,7 +44,7 @@ function App() {
           <>
             <Header />
             <TopMenu />
-            <Route exact path="/account/signin" component={HomeView} />
+            <Route exact path="/home" component={HomeView} />
             <Route
               exact
               path="/account/forgotpassword"

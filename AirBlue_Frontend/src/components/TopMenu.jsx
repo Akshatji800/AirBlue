@@ -6,7 +6,7 @@ const TopMenu = () => {
     <React.Fragment>
       <nav className="navbar navbar-expand-lg navbar-dark bg-dark p-0">
         <div className="container-fluid">
-          <Link className="navbar-brand" to="/">
+          <Link className="navbar-brand" to="/home">
             AirBlue
           </Link>
           <button
