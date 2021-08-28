@@ -26,7 +26,7 @@ urlpatterns = [
     path('api', csrf_exempt(
         GraphQLView.as_view(graphiql=True, schema=schema)
     ), name='graphqlapi'),
-    path('admin', admin.site.urls),
+    path('admin/', admin.site.urls),
 ]
 
 if settings.DEBUG:

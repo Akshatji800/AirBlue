@@ -1,7 +1,13 @@
-import React from "react";
+import React , {useState} from "react";
 import { Field, reduxForm } from "redux-form";
 import { compose } from "redux";
 import { Link } from "react-router-dom";
+import { Redirect } from "react-router-dom/cjs/react-router-dom.min";
+import {
+  useMutation,
+  gql
+} from "@apollo/client";
+
 import renderFormGroupField from "../../helpers/renderFormGroupField";
 import {
   required,
@@ -22,24 +28,54 @@ import { ReactComponent as IconShieldLockFill } from "bootstrap-icons/icons/shie
 
 const SignInForm = (props) => {
   const { handleSubmit, submitting, onSubmit, submitFailed } = props;
+  const [status, setStatus] = useState(false);
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const LOAD_USER_lOGIN = gql`
+    mutation tokenAuth(
+        $username: String!
+        $password: String!
+        ){
+        tokenAuth(
+            username: $username
+            password: $password
+        ) {
+            success,
+            errors,
+            token,
+            refreshToken
+        }
+    }
+    `
+  const [getUser, { data, loading, error }] = useMutation(LOAD_USER_lOGIN);
+  const SubmitHandler = (e)=> {e.preventDefault(); getUser({
+      variables: {
+        username: username,
+        password: password,
+      },
+    });
+  if(data!=undefined){if(data.tokenAuth.success)(setStatus(true));}}
   return (
     <form
-      onSubmit={handleSubmit(onSubmit)}
+      onSubmit={SubmitHandler}
       className={`needs-validation ${submitFailed ? "was-validated" : ""}`}
       noValidate
     >
-      <Field
+      {status? (<Redirect to = "/home"/>):(
+        <div>
+          <Field
         name="mobileNo"
-        type="number"
-        label="Email"
+        type="text"
+        label="Username"
         component={renderFormGroupField}
-        placeholder="Enter your registered email"
+        placeholder="Enter your registered username"
         icon={IconPhoneFill}
         validate={[required, maxLengthMobileNo, minLengthMobileNo, digit]}
         required={true}
         max="999999999999999"
         min="9999"
         className="mb-3"
+        onChange = {(e)=>{setUsername(e.target.value)}}
       />
       <Field
         name="password"
@@ -53,6 +89,7 @@ const SignInForm = (props) => {
         maxLength="20"
         minLength="8"
         className="mb-3"
+        onChange = {(e)=>{setPassword(e.target.value)}}
       />
       <button
         type="submit"
@@ -89,6 +126,10 @@ const SignInForm = (props) => {
           </Link>
         </div>
       </div>
+        </div>
+      )};
+      
+      
     </form>
   );
 };

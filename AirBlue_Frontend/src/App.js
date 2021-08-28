@@ -6,6 +6,18 @@ import TopMenu from "./components/TopMenu";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import "./App.min.css";
+import {
+  ApolloClient,
+  InMemoryCache,
+  ApolloProvider,
+  useQuery,
+  gql
+} from "@apollo/client";
+
+const client = new ApolloClient({
+  uri: 'http://127.0.0.1:8000/api',
+  cache: new InMemoryCache()
+});
 //const Header = lazy(() => import("./components/Header"));
 //const TopMenu = lazy(() => import("./components/TopMenu"));
 const HomeView = lazy(() => import("./views/Home"));
@@ -31,6 +43,7 @@ const BlogDetailView = lazy(() => import("./views/blog/Detail"));
 
 function App() {
   return (
+    <ApolloProvider client = {client}>
     <BrowserRouter>
       <React.Fragment>
         <Suspense
@@ -76,6 +89,7 @@ function App() {
         <Footer />
       </React.Fragment>
     </BrowserRouter>
+    </ApolloProvider>
   );
 }
 
