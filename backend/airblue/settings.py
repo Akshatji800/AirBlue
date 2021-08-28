@@ -56,6 +56,8 @@ INSTALLED_APPS = [
     'graphene_django',
     'graphene_graphiql_explorer',
     'corsheaders',
+    'graphql_jwt.refresh_token.apps.RefreshTokenConfig',
+    'graphql_auth',
 ]
 
 MIDDLEWARE = [
@@ -129,6 +131,19 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+GRAPHQL_JWT = {
+    "JWT_VERIFY_EXPIRATION": True,
+
+    # optional
+    "JWT_LONG_RUNNING_REFRESH_TOKEN": True,
+}
+
+GRAPHENE = {
+    'SCHEMA': 'quickstart.schema.schema', # this file doesn't exist yet
+    'MIDDLEWARE': [
+        'graphql_jwt.middleware.JSONWebTokenMiddleware',
+    ],
+}
 
 # Internationalization
 # https://docs.djangoproject.com/en/3.2/topics/i18n/
