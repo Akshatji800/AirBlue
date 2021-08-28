@@ -1,6 +1,10 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import Search from "./Search";
+import {
+  useQuery,
+  gql
+} from "@apollo/client";
 import { ReactComponent as IconCart3 } from "bootstrap-icons/icons/cart3.svg";
 import { ReactComponent as IconPersonBadgeFill } from "bootstrap-icons/icons/person-badge-fill.svg";
 import { ReactComponent as IconStarFill } from "bootstrap-icons/icons/star-fill.svg";
@@ -13,9 +17,28 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser } from "@fortawesome/free-solid-svg-icons";
 
 const Header = () => {
+  var path = window.location.pathname
+  var n = path.lastIndexOf("/");
+  var user = path.substring(n+1);
+  const LOAD_USER_MILES = gql`
+    query allMiles(
+        $user: String!
+        ){
+        allMiles(
+            user: $user
+        ) {
+            miles
+        }
+    }
+    `
+
+  const { data, loading, error } = useQuery(LOAD_USER_MILES, {
+    variables: {user: user}
+  });
+
   return (
     <React.Fragment>
-      <header className="p-3 border-bottom bg-light">
+      <header className="p-3 border-bottom bg-light" >
         <div className="container-fluid">
           <div className="row g-3">
             <div className="col-md-3 text-center">
@@ -93,7 +116,7 @@ const Header = () => {
                 </ul>
               </div>
               <a>
-                Miles: 1000
+                AirMiles: {(data!=undefined)? data.allMiles[0].miles : "0"}
               </a>
               {/* <Link to="/account/signin">Sign In</Link> |{" "}
               <Link to="/account/signup"> Sign Up</Link> */}

@@ -55,13 +55,14 @@ const SignInForm = (props) => {
       },
     });
   if(data!=undefined){if(data.tokenAuth.success)(setStatus(true));}}
+  
   return (
     <form
       onSubmit={SubmitHandler}
       className={`needs-validation ${submitFailed ? "was-validated" : ""}`}
       noValidate
     >
-      {status? (<Redirect to = "/home"/>):(
+      {status? (<Redirect to = {`/home/${username}`}/>):(
         <div>
           <Field
         name="mobileNo"
