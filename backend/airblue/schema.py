@@ -185,8 +185,8 @@ class RemoveFromCart(graphene.Mutation):
         if item:
             item.user.remove(userInstance.id)
             item.save()
-            return AddtoCart(cart=item)
-        return AddtoCart(cart=None)
+            return RemoveFromCart(cart=item)
+        return RemoveFromCart(cart=None)
 
 class Query(graphene.ObjectType):
 
