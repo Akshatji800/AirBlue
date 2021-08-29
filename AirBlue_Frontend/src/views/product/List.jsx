@@ -54,7 +54,7 @@ function ProductListView(){
         >
           <div className="container text-center">
             <span className="display-5 px-3 bg-white rounded shadow">
-              Electronics
+              Fashion
             </span>
           </div>
         </div>
@@ -76,7 +76,7 @@ function ProductListView(){
                 <div className="col-md-8">
                   <span className="align-middle font-weight-bold">
                     {(data!=undefined)? data.allItems.length : "0"} results for{" "}
-                    <span className="text-warning">"electronics"</span>
+                    <span className="text-warning">"fashion"</span>
                   </span>
                 </div>
                 <div className="col-md-4">
