@@ -43,7 +43,10 @@ const Header = () => {
         <div className="container-fluid">
           <div className="row g-3">
             <div className="col-md-3 text-center">
-              <Link to="/home">
+              <Link className="navbar-brand" to={{
+        pathname: `/home/${user}`,
+        state: { authenticated: true }
+      }}>
                 <img
                   alt="logo"
                   src="../../images/AirBlue.png"
