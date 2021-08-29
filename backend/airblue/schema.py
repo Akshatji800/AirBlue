@@ -155,6 +155,21 @@ class AddtoCart(graphene.Mutation):
             return AddtoCart(cart=item)
         return AddtoCart(cart=None)
 
+class RemoveFromCart(graphene.Mutation):
+    class Arguments:
+        input = ItemsInput(required=True)
+    
+    cart = graphene.Field(ItemsType)
+    @staticmethod
+    def mutate(root, info, input=None):
+        item =  Items.objects.get(name=input.name)
+        userInstance = get_user_model().objects.get(username = input.user)
+        if item:
+            item.user.remove(userInstance.id)
+            item.save()
+            return AddtoCart(cart=item)
+        return AddtoCart(cart=None)
+
 class Query(graphene.ObjectType):
 
     all_products = graphene.List(
@@ -241,6 +256,7 @@ class Mutation(graphene.ObjectType):
     token_auth = mutations.ObtainJSONWebToken.Field()
     update_miles = UpdateMiles.Field()
     add_cart = AddtoCart.Field()
+    remove_cart = RemoveFromCart.Field()
 
 
 schema = graphene.Schema(
