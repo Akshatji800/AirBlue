@@ -1,7 +1,11 @@
-import React, { lazy, Component } from "react";
+import React, { lazy, Component, useState } from "react";
 import { data } from "../../data";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTh, faBars } from "@fortawesome/free-solid-svg-icons";
+import {
+  useQuery,
+  gql
+} from "@apollo/client";
 const Paging = lazy(() => import("../../components/Paging"));
 const Breadcrumb = lazy(() => import("../../components/Breadcrumb"));
 const FilterCategory = lazy(() => import("../../components/filter/Category"));
@@ -19,45 +23,29 @@ const CardProductList = lazy(() =>
   import("../../components/card/CardProductList")
 );
 
-class ProductListView extends Component {
-  state = {
-    currentProducts: [],
-    currentPage: null,
-    totalPages: null,
-    totalItems: 0,
-    view: "list",
-  };
+function ProductListView(){
+  const [currentProducts, setProducts] = useState([]);
+  const LOAD_ITEMS = gql`
+    query allItems{
+      allItems{
+        description
+        discountPrice
+        img
+        isFreeShipping
+        isHot
+        isNew
+        name
+        price
+        originPrice
+        star
+      }
+    }
+  `
+  const { data, loading, error } = useQuery(LOAD_ITEMS);
+  console.log(data);
 
-  UNSAFE_componentWillMount() {
-    const totalItems = this.getProducts().length;
-    this.setState({ totalItems });
-  }
-
-  onPageChanged = (page) => {
-    let products = this.getProducts();
-    const { currentPage, totalPages, pageLimit } = page;
-    const offset = (currentPage - 1) * pageLimit;
-    const currentProducts = products.slice(offset, offset + pageLimit);
-    this.setState({ currentPage, currentProducts, totalPages });
-  };
-
-  onChangeView = (view) => {
-    this.setState({ view });
-  };
-
-  getProducts = () => {
-    let products = data.products;
-    products = products.concat(products);
-    products = products.concat(products);
-    products = products.concat(products);
-    products = products.concat(products);
-    products = products.concat(products);
-    return products;
-  };
-
-  render() {
-    return (
-      <React.Fragment>
+  return(
+    <div>
         <div
           className="p-5 bg-primary bs-cover"
           style={{
@@ -66,7 +54,7 @@ class ProductListView extends Component {
         >
           <div className="container text-center">
             <span className="display-5 px-3 bg-white rounded shadow">
-              T-Shirts
+              Electronics
             </span>
           </div>
         </div>
@@ -87,8 +75,8 @@ class ProductListView extends Component {
               <div className="row">
                 <div className="col-md-8">
                   <span className="align-middle font-weight-bold">
-                    {this.state.totalItems} results for{" "}
-                    <span className="text-warning">"t-shirts"</span>
+                    10 results for{" "}
+                    <span className="text-warning">"electronics"</span>
                   </span>
                 </div>
                 <div className="col-md-4">
@@ -107,11 +95,7 @@ class ProductListView extends Component {
                       aria-label="Grid"
                       type="button"
                       onClick={() => this.onChangeView("grid")}
-                      className={`btn ${
-                        this.state.view === "grid"
-                          ? "btn-primary"
-                          : "btn-outline-primary"
-                      }`}
+                      className="btn"
                     >
                       <FontAwesomeIcon icon={faTh} />
                     </button>
@@ -119,11 +103,7 @@ class ProductListView extends Component {
                       aria-label="List"
                       type="button"
                       onClick={() => this.onChangeView("list")}
-                      className={`btn ${
-                        this.state.view === "list"
-                          ? "btn-primary"
-                          : "btn-outline-primary"
-                      }`}
+                      className="list"
                     >
                       <FontAwesomeIcon icon={faBars} />
                     </button>
@@ -132,38 +112,22 @@ class ProductListView extends Component {
               </div>
               <hr />
               <div className="row g-3">
-                {this.state.view === "grid" &&
-                  this.state.currentProducts.map((product, idx) => {
+                {(data!=undefined) ? (
+                  data['allItems'].map((item, index) => {
                     return (
-                      <div key={idx} className="col-md-4">
-                        <CardProductGrid data={product} />
+                      <div key={index} className="col-md-12">
+                        <CardProductList data={item} />
                       </div>
                     );
-                  })}
-                {this.state.view === "list" &&
-                  this.state.currentProducts.map((product, idx) => {
-                    return (
-                      <div key={idx} className="col-md-12">
-                        <CardProductList data={product} />
-                      </div>
-                    );
-                  })}
+                  })
+                ): ""}
               </div>
               <hr />
-              <Paging
-                totalRecords={this.state.totalItems}
-                pageLimit={9}
-                pageNeighbours={3}
-                onPageChanged={this.onPageChanged}
-                sizing=""
-                alignment="justify-content-center"
-              />
             </div>
           </div>
         </div>
-      </React.Fragment>
-    );
-  }
-}
+      </div>
+  );
 
+}
 export default ProductListView;
