@@ -270,9 +270,27 @@ class UpdateMiles(graphene.Mutation):
         miles_details.save()
         return UpdateMiles(miles_details=miles_details)
 
+class CreateMiles(graphene.Mutation):
+    class Arguments:
+        input = MilesInput(required=True)
+
+    miles_details = graphene.Field(MilesType)
+
+    @staticmethod
+    def mutate(root, info, input=None):
+        userInstance = get_user_model().objects.get(username = input.user)
+        miles_details = Miles.objects.create(
+            user_id = userInstance.id,
+            miles = 1000
+        )
+        miles_details.save()
+        return CreateMiles(miles_details=miles_details)
+
+
 class Mutation(graphene.ObjectType):
     token_auth = mutations.ObtainJSONWebToken.Field()
     update_miles = UpdateMiles.Field()
+    create_miles = CreateMiles.Field()
     add_cart = AddtoCart.Field()
     remove_cart = RemoveFromCart.Field()
     create_user = CreateUser.Field()
