@@ -8,6 +8,7 @@ import { ReactComponent as IconTruck } from "bootstrap-icons/icons/truck.svg";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   useQuery,
+  useMutation,
   gql
 } from "@apollo/client";
 import { faMinus, faPlus } from "@fortawesome/free-solid-svg-icons";
@@ -40,12 +41,38 @@ function CartView(){
         }
     }
     `
+    const REMOVE_CART = gql`
+    mutation removeCart(
+        $name: String!
+        $user: String!
+        ){
+          removeCart(
+            input: {
+              name: $name
+            user: $user
+            }
+        ) {
+          cart {
+          name
+        }
+        }
+    }
+    `
 
   const {data, loading, error} = useQuery(LOAD_USER_CART, {variables:{user: user}})
+  const [removeCart, { rdata, rloading, rerror }] = useMutation(REMOVE_CART);
   var cartTotal = 0;
   if(data!=undefined){
     cartTotal = data['cartItems'].reduce((total, { price = 0 }) => total + price, 0);
     console.log(cartTotal)  
+  }
+
+  const remove = (name) => {
+    removeCart({variables: {
+        name: name,
+        user: user
+      }})
+      window.location.reload(false);
   }
   
  
@@ -87,7 +114,7 @@ function CartView(){
                         <button className="btn btn-sm btn-outline-secondary mr-2">
                           <IconHeartFill className="i-va" />
                         </button>
-                        <button className="btn btn-sm btn-outline-danger">
+                        <button className="btn btn-sm btn-outline-danger" onClick={() => remove(item.name)}>
                           <IconTrash className="i-va" />
                         </button>
                       </td><tr />
