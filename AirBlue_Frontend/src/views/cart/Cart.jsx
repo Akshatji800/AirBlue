@@ -63,13 +63,17 @@ function CartView(){
                               
                                {item.name}
                             </Link>
+                          
                           </div>
                         </div>
                       </td>
                       <td>
+                         <td>
+                        <var className="Quantity"> 1 </var>
+                      </td>
                       </td>
                       <td>
-                        <var className="price">{item.price}</var>
+                        <var className="price">{item.price} ctx</var>
                       </td>
                       <td className="text-right">
                         <button className="btn btn-sm btn-outline-secondary mr-2">
@@ -119,7 +123,7 @@ function CartView(){
                 <Link to="/checkout" className="btn btn-primary float-right">
                   Make Purchase <IconChevronRight className="i-va" />
                 </Link>
-                <Link to="/" className="btn btn-secondary">
+                <Link to="/category" className="btn btn-secondary">
                   <IconChevronLeft className="i-va" /> Continue shopping
                 </Link>
               </div>
