@@ -1,10 +1,11 @@
 # cookbook/schema.py
 from django.db import models
 import graphene
+from django.contrib.auth import get_user_model
 from graphene_django import DjangoObjectType
 from graphene.types.generic import GenericScalar
 from graphql_auth import mutations
-
+from django.conf import settings
 from airblue.models import (
     Items,
     Miles,
@@ -17,6 +18,12 @@ from airblue.models import (
 from django.db.models import When, Case, Value, Sum
 
 from django.utils.translation import gettext_lazy as _
+
+User = settings.AUTH_USER_MODEL
+
+class UserType(DjangoObjectType):
+    class Meta:
+        model = get_user_model()
 
 PRODUCT_PREFETCHES = (
     'images',
@@ -90,6 +97,10 @@ class MilesInput(graphene.InputObjectType):
     user=graphene.String()
     miles = graphene.Int()
 
+class ItemsInput(graphene.InputObjectType):
+    name=graphene.String()
+    user = graphene.String()
+
 class ProductRemainsType(DjangoObjectType):
 
     class Meta:
@@ -129,6 +140,21 @@ def slice_products(qs, page):
     ).order_by('-in_stock', '-id')[(page-1)*12:page*12]
 
 
+class AddtoCart(graphene.Mutation):
+    class Arguments:
+        input = ItemsInput(required=True)
+
+    cart = graphene.Field(ItemsType)
+    @staticmethod
+    def mutate(root, info, input=None):
+        item =  Items.objects.get(name=input.name)
+        userInstance = get_user_model().objects.get(username = input.user)
+        if item:
+            item.user.add(userInstance.id)
+            item.save()
+            return AddtoCart(cart=item)
+        return AddtoCart(cart=None)
+
 class Query(graphene.ObjectType):
 
     all_products = graphene.List(
@@ -148,6 +174,10 @@ class Query(graphene.ObjectType):
     all_miles = graphene.List(MilesType, user=graphene.String(required=True))
     all_items = graphene.List(ItemsType)
     cart_items = graphene.List(ItemsType,user=graphene.String(required=True))
+    users = graphene.List(UserType)
+
+    def resolve_users(self, info):
+        return get_user_model().objects.all()
 
     def resolve_all_miles(root, info, user):
         try:
@@ -210,6 +240,7 @@ class UpdateMiles(graphene.Mutation):
 class Mutation(graphene.ObjectType):
     token_auth = mutations.ObtainJSONWebToken.Field()
     update_miles = UpdateMiles.Field()
+    add_cart = AddtoCart.Field()
 
 
 schema = graphene.Schema(
