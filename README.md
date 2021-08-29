@@ -7,7 +7,7 @@
 <h3 align="center">AirBlue</h3>
 
 <p align="center">
- Frontend: Built with React JS, Bootstrap 5, Backend: Built with django 
+ Frontend: Built with React JS, Bootstrap 5, Backend: Built with django, graphql 
   <br>
   <br>
   <br>
@@ -26,7 +26,7 @@ Frontend: Built with React JS, Bootstrap 5, Backend: Built with django
 
 Several quick start options are available:
 
-- [Download the latest branch](https://github.com/Akshatji800/AirBlue)
+- [Download the latest branch](https://github.com/Akshatji800/AirBlue/archive/refs/heads/master.zip)
 - Clone the repo: `git clone https://github.com/Akshatji800/AirBlue.git`
 
 #### For Frontend:
