@@ -29,7 +29,10 @@ const TopMenu = () => {
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
             <ul className="navbar-nav">
               <li className="nav-item">
-                <Link className="nav-link" to={`/category/${user}`}>
+                                <Link to={{
+        pathname: `/category/${user}`,
+        state: { authenticated: true }
+      }} className="nav-link">
                   Fashion
                 </Link>
               </li>

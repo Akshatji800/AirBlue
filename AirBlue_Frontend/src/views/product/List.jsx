@@ -23,7 +23,7 @@ const CardProductList = lazy(() =>
   import("../../components/card/CardProductList")
 );
 
-function ProductListView(){
+const ProductListView = props => {
   const [currentProducts, setProducts] = useState([]);
   const LOAD_ITEMS = gql`
     query allItems{
@@ -41,6 +41,8 @@ function ProductListView(){
       }
     }
   `
+  const [profileState, setProfileState] = useState(props);
+  console.log(profileState.location.state.authenticated)
   const { data, loading, error } = useQuery(LOAD_ITEMS);
   console.log(data);
 
