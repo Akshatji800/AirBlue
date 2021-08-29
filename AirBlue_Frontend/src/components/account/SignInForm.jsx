@@ -140,7 +140,7 @@ const SignInForm = (props) => {
         </div>
       </div>
         </div>
-      )};
+      )}
       
       
     </form>
