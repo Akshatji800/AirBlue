@@ -202,6 +202,7 @@ class OrderProduct(models.Model):
         verbose_name_plural = _('Order positions')
 
 class Items(models.Model):
+    user = models.ManyToManyField(User)
     name = models.CharField(max_length=100)
     img = models.CharField(max_length=100)  
     price = models.PositiveIntegerField()

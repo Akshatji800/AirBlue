@@ -74,6 +74,7 @@ class ItemsType(DjangoObjectType):
     class Meta:
         model = Items
         fields = (
+            "user",
             "name",
             "img",
             "price",
@@ -146,6 +147,7 @@ class Query(graphene.ObjectType):
 
     all_miles = graphene.List(MilesType, user=graphene.String(required=True))
     all_items = graphene.List(ItemsType)
+    cart_items = graphene.List(ItemsType,user=graphene.String(required=True))
 
     def resolve_all_miles(root, info, user):
         try:
@@ -153,6 +155,11 @@ class Query(graphene.ObjectType):
         except:
             return None
 
+    def resolve_cart_items(root, info, user):
+        try:
+            return Items.objects.filter(user__username=user).all()
+        except:
+            return None
     def resolve_all_items(root, info):
         try:
             return Items.objects.all()
