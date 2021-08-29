@@ -1,10 +1,12 @@
 # cookbook/schema.py
+from django.db import models
 import graphene
 from graphene_django import DjangoObjectType
 from graphene.types.generic import GenericScalar
 from graphql_auth import mutations
 
 from airblue.models import (
+    Items,
     Miles,
     Product,
     ProductImage,
@@ -68,6 +70,21 @@ class MilesType(DjangoObjectType):
         model = Miles
         fields = ("user", "miles")
 
+class ItemsType(DjangoObjectType):
+    class Meta:
+        model = Items
+        fields = (
+            "name",
+            "img",
+            "price",
+            "originPrice",
+            "discountPrice",
+            "description",
+            "star",
+            "isNew",
+            "isHot",
+            "isFreeShipping")
+
 class MilesInput(graphene.InputObjectType):
     user=graphene.String()
     miles = graphene.Int()
@@ -128,6 +145,7 @@ class Query(graphene.ObjectType):
     )
 
     all_miles = graphene.List(MilesType, user=graphene.String(required=True))
+    all_items = graphene.List(ItemsType)
 
     def resolve_all_miles(root, info, user):
         try:
@@ -135,6 +153,11 @@ class Query(graphene.ObjectType):
         except:
             return None
 
+    def resolve_all_items(root, info):
+        try:
+            return Items.objects.all()
+        except:
+            return None
 
     def resolve_all_products(root, info, page=1):
 
