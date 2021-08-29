@@ -200,3 +200,15 @@ class OrderProduct(models.Model):
 
         verbose_name = _('Order position')
         verbose_name_plural = _('Order positions')
+
+class Items(models.Model):
+    name = models.CharField(max_length=100)
+    img = models.CharField(max_length=100)  
+    price = models.PositiveIntegerField()
+    originPrice = models.PositiveIntegerField()
+    discountPrice = models.PositiveIntegerField()
+    description = models.TextField()
+    star =  models.PositiveIntegerField()
+    isNew = models.BooleanField()
+    isHot = models.BooleanField()
+    isFreeShipping = models.BooleanField()

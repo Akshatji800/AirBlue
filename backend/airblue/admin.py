@@ -1,5 +1,6 @@
 from django.contrib import admin
 from .models import (
+    Items,
     Order,
     Product,
     ProductRemains,
@@ -116,3 +117,5 @@ class CategoryAdmin(admin.ModelAdmin):
 @admin.register(Miles)
 class MilesAdmin(admin.ModelAdmin):
  pass
+
+admin.site.register(Items)
