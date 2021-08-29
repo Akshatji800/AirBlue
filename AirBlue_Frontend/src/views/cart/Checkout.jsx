@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { useState,Component } from "react";
 import { ReactComponent as IconEnvelope } from "bootstrap-icons/icons/envelope.svg";
 import { ReactComponent as IconTruck } from "bootstrap-icons/icons/truck.svg";
 import { ReactComponent as IconReceipt } from "bootstrap-icons/icons/receipt.svg";
@@ -8,10 +8,66 @@ import { ReactComponent as IconCart3 } from "bootstrap-icons/icons/cart3.svg";
 class CheckoutView extends Component {
   constructor(props) {
     super();
-    this.state = {};
+    this.Setstatuscredit = this.Setstatuscredit.bind(this);
+    this.Setstatusmiles = this.Setstatusmiles.bind(this);
+    this.state = {statuscredit:false, statusmiles:false};
+  }
+
+
+  Setstatuscredit(){
+    this.setState({statuscredit:true, statusmiles: false})
+    console.log(this.state.statuscredit)
+  }
+  Setstatusmiles(){
+    this.setState({statuscredit:false, statusmiles: true})
+    console.log(this.state.statuscredit)
   }
 
   render() {
+    const [miles, setMiles] = useState(false)
+    let form;
+    if(this.state.statuscredit){
+      form = <div>
+                          <div className="row g-3">
+                    <div className="col-md-6">
+                      <input
+                        type="text"
+                        className="form-control"
+                        placeholder="Name on card"
+                      />
+                    </div>
+                    <div className="col-md-6">
+                      <input
+                        type="number"
+                        className="form-control"
+                        placeholder="Card number"
+                      />
+                    </div>
+                    <div className="col-md-4">
+                      <input
+                        type="number"
+                        className="form-control"
+                        placeholder="Expiration month"
+                      />
+                    </div>
+                    <div className="col-md-4">
+                      <input
+                        type="number"
+                        className="form-control"
+                        placeholder="Expiration year"
+                      />
+                    </div>
+                    <div className="col-md-4">
+                      <input
+                        type="number"
+                        className="form-control"
+                        placeholder="CVV"
+                      />
+                    </div>
+                  </div>
+      </div>
+    }
+      
     return (
       <React.Fragment>
         <div className="bg-secondary border-top p-4 text-white mb-3">
@@ -181,6 +237,7 @@ class CheckoutView extends Component {
                           className="form-check-input"
                           defaultChecked
                           required
+                          onChange = {(e)=>this.Setstatuscredit}
                         />
                         <label className="form-check-label" htmlFor="credit">
                           Credit card
@@ -201,6 +258,7 @@ class CheckoutView extends Component {
                           type="radio"
                           className="form-check-input"
                           required
+                          onChange = {(e)=>this.Setstatuscredit}
                         />
                         <label className="form-check-label" htmlFor="paypal">
                           PayPal
@@ -214,44 +272,51 @@ class CheckoutView extends Component {
                       </div>
                     </div>
                   </div>
-                  <div className="row g-3">
+                  <div className="col-md-6">
+                      <div className="form-check">
+                        <input
+                          id="credit"
+                          name="paymentMethod"
+                          type="radio"
+                          className="form-check-input"
+                          defaultChecked
+                          required
+                          onChange = {(e)=> setMiles(true)}
+                        />
+                        <label className="form-check-label" htmlFor="credit">
+                          AirMiles
+                          <img
+                            src="../../images/payment/miles.png"
+                            alt="..."
+                            className="ml-3"
+                            height={40}
+                          />
+                        </label>
+                      </div>
+                    </div>
+                </div>
+                {
+                  miles && 
+                <div>
+                
+                          <div className="row g-3">
                     <div className="col-md-6">
                       <input
                         type="text"
                         className="form-control"
-                        placeholder="Name on card"
+                        placeholder="Username"
                       />
                     </div>
                     <div className="col-md-6">
                       <input
-                        type="number"
+                        type="password"
                         className="form-control"
-                        placeholder="Card number"
-                      />
-                    </div>
-                    <div className="col-md-4">
-                      <input
-                        type="number"
-                        className="form-control"
-                        placeholder="Expiration month"
-                      />
-                    </div>
-                    <div className="col-md-4">
-                      <input
-                        type="number"
-                        className="form-control"
-                        placeholder="Expiration year"
-                      />
-                    </div>
-                    <div className="col-md-4">
-                      <input
-                        type="number"
-                        className="form-control"
-                        placeholder="CVV"
+                        placeholder="Password"
                       />
                     </div>
                   </div>
-                </div>
+      </div>
+}
                 <div className="card-footer border-info">
                   <button type="button" className="btn btn-block btn-info">
                     Pay Now <strong>$162</strong>
