@@ -2,11 +2,17 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 const TopMenu = () => {
+  var path = window.location.pathname
+  var n = path.lastIndexOf("/");
+  var user = path.substring(n+1);
   return (
     <React.Fragment>
       <nav className="navbar navbar-expand-lg navbar-dark bg-dark p-0">
         <div className="container-fluid">
-          <Link className="navbar-brand" to="/home">
+          <Link className="navbar-brand" to={{
+        pathname: `/home/${user}`,
+        state: { authenticated: true }
+      }}>
             AirBlue
           </Link>
           <button

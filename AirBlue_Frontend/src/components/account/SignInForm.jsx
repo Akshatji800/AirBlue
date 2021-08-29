@@ -67,7 +67,13 @@ const SignInForm = (props) => {
       className={`needs-validation ${submitFailed ? "was-validated" : ""}`}
       noValidate
     >
-      {status? (<Redirect to = {`/home/${username}`}/>):(
+      {status? (
+        <Redirect
+        to={{
+        pathname: `/home/${username}`,
+        state: { authenticated: true }
+      }}
+    />):(
         <div>
         {invalid ? "Invalid username/password" : ""}
           <Field

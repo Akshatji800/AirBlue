@@ -57,7 +57,7 @@ function App() {
           <>
             <Header />
             <TopMenu />
-            <Route exact path="/home/:user" component={HomeView} />
+            <Route exact path="/home/:user" render={(props) => <HomeView {...props }/>}/>
             <Route
               exact
               path="/account/forgotpassword"

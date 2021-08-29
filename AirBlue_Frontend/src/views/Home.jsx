@@ -1,5 +1,5 @@
 import React, { lazy, Component } from "react";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 // import { link45, file, check2all } from "../npm/icon";
 import { data } from "../data";
 import { ReactComponent as IconLaptop } from "bootstrap-icons/icons/laptop.svg";
@@ -22,6 +22,11 @@ const CardDealsOfTheDay = lazy(() =>
 );
 
 class HomeView extends Component {
+  componentDidMount(props){
+    if(this.props.location.state == undefined){
+     console.log(this.props.location.state.authenticated) 
+    }
+  }
   components = {
     IconLaptop: IconLaptop,
     IconHeadset: IconHeadset,
