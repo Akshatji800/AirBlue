@@ -31,6 +31,7 @@ const SignInForm = (props) => {
   const [status, setStatus] = useState(false);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [invalid, setInvalid] = useState(false);
   const LOAD_USER_lOGIN = gql`
     mutation tokenAuth(
         $username: String!
@@ -54,7 +55,11 @@ const SignInForm = (props) => {
         password: password,
       },
     });
-  if(data!=undefined){if(data.tokenAuth.success)(setStatus(true));}}
+  if(data!=undefined){if(data.tokenAuth.success){
+    setStatus(true);
+  }else{
+    setInvalid(true); 
+  };}}
   
   return (
     <form
@@ -64,6 +69,7 @@ const SignInForm = (props) => {
     >
       {status? (<Redirect to = {`/home/${username}`}/>):(
         <div>
+        {invalid ? "Invalid username/password" : ""}
           <Field
         name="mobileNo"
         type="text"
