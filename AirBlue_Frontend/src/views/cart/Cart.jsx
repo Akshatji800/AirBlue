@@ -1,4 +1,4 @@
-import React, { Component, lazy } from "react";
+import React, { Component, lazy, useState } from "react";
 import { Link } from "react-router-dom";
 import { ReactComponent as IconHeartFill } from "bootstrap-icons/icons/heart-fill.svg";
 import { ReactComponent as IconTrash } from "bootstrap-icons/icons/trash.svg";
@@ -42,6 +42,14 @@ function CartView(){
     `
 
   const {data, loading, error} = useQuery(LOAD_USER_CART, {variables:{user: user}})
+  var cartTotal = 0;
+  if(data!=undefined){
+    cartTotal = data['cartItems'].reduce((total, { price = 0 }) => total + price, 0);
+    console.log(cartTotal)  
+  }
+  
+ 
+
 
   const renderItems = (item, index) => {
     return (
@@ -120,7 +128,7 @@ function CartView(){
                 </table>
               </div>
               <div className="card-footer">
-                <Link to="/checkout" className="btn btn-primary float-right">
+                <Link to={`/checkout/${user}?${cartTotal}`} className="btn btn-primary float-right">
                   Make Purchase <IconChevronRight className="i-va" />
                 </Link>
                 <Link to="/category" className="btn btn-secondary">

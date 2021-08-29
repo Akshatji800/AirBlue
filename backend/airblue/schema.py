@@ -203,7 +203,7 @@ class UpdateMiles(graphene.Mutation):
     @staticmethod
     def mutate(root, info, input=None):
         miles_details = Miles.objects.get(user__username = input.user)
-        miles_details.miles = input.miles
+        miles_details.miles = miles_details.miles - input.miles
         miles_details.save()
         return UpdateMiles(miles_details=miles_details)
 
