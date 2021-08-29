@@ -12,9 +12,8 @@ class InternalServerErrorView extends Component {
       <div className="container text-center p-5">
         <div className="display-1">
           <IconBugFill className="i-va text-warning" />
-          500
         </div>
-        <h1 className="mb-3">Internal Server Error</h1>
+        <h1 className="mb-3">Order confirmed</h1>
         <div className="row justify-content-md-center">
           <div className="col-md-6">
             <Search />
