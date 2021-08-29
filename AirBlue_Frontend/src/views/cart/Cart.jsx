@@ -16,11 +16,12 @@ const CouponApplyForm = lazy(() =>
   import("../../components/others/CouponApplyForm")
 );
 
-function CartView(){
+const  CartView = props => {  
   var path = window.location.pathname
   var n = path.lastIndexOf("/");
   var user = path.substring(n+1);
-
+  const [profileState, setProfileState] = useState(props);
+  console.log(profileState.location.state.authenticated)
   const LOAD_USER_CART = gql`
     query cartItems(
         $user: String!

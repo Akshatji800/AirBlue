@@ -59,7 +59,10 @@ const Header = () => {
             </div>
             <div className="col-md-4">
               <div className="position-relative d-inline mr-3">
-                <Link to={`/cart/${user}`} className="btn btn-primary">
+                <Link to={{
+        pathname: `/cart/${user}`,
+        state: { authenticated: true }
+      }} className="btn btn-primary">
                   <IconCart3 className="i-va" />
                   <div className="position-absolute top-0 left-100 translate-middle badge bg-danger rounded-circle">
                     2
