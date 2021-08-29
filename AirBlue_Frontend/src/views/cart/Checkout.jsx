@@ -13,7 +13,6 @@ class CheckoutView extends Component {
     this.state = {statuscredit:false, statusmiles:false};
   }
 
-
   Setstatuscredit(){
     this.setState({statuscredit:true, statusmiles: false})
     console.log(this.state.statuscredit)
@@ -24,7 +23,6 @@ class CheckoutView extends Component {
   }
 
   render() {
-    const [miles, setMiles] = useState(false)
     let form;
     if(this.state.statuscredit){
       form = <div>
@@ -67,7 +65,26 @@ class CheckoutView extends Component {
                   </div>
       </div>
     }
-      
+       if(this.state.statusmiles){
+      form = <div>
+                          <div className="row g-3">
+                    <div className="col-md-6">
+                      <input
+                        type="text"
+                        className="form-control"
+                        placeholder="Username"
+                      />
+                    </div>
+                    <div className="col-md-6">
+                      <input
+                        type="password"
+                        className="form-control"
+                        placeholder="Password"
+                      />
+                    </div>
+                  </div>
+      </div>
+    }
     return (
       <React.Fragment>
         <div className="bg-secondary border-top p-4 text-white mb-3">
@@ -281,7 +298,7 @@ class CheckoutView extends Component {
                           className="form-check-input"
                           defaultChecked
                           required
-                          onChange = {(e)=> setMiles(true)}
+                          onChange = {(e)=>this.Setstatusmiles}
                         />
                         <label className="form-check-label" htmlFor="credit">
                           AirMiles
@@ -295,28 +312,7 @@ class CheckoutView extends Component {
                       </div>
                     </div>
                 </div>
-                {
-                  miles && 
-                <div>
-                
-                          <div className="row g-3">
-                    <div className="col-md-6">
-                      <input
-                        type="text"
-                        className="form-control"
-                        placeholder="Username"
-                      />
-                    </div>
-                    <div className="col-md-6">
-                      <input
-                        type="password"
-                        className="form-control"
-                        placeholder="Password"
-                      />
-                    </div>
-                  </div>
-      </div>
-}
+                {this.form}
                 <div className="card-footer border-info">
                   <button type="button" className="btn btn-block btn-info">
                     Pay Now <strong>$162</strong>
