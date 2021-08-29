@@ -75,7 +75,7 @@ function ProductListView(){
               <div className="row">
                 <div className="col-md-8">
                   <span className="align-middle font-weight-bold">
-                    10 results for{" "}
+                    {(data!=undefined)? data.allItems.length : "0"} results for{" "}
                     <span className="text-warning">"electronics"</span>
                   </span>
                 </div>
