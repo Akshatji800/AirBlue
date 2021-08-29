@@ -176,7 +176,7 @@ function CheckoutView(){
               </div>
               <div className="card-footer border-info">
                 <button type="button" className="btn btn-block btn-info" onClick={() => {edit()}}>
-                  Pay Now
+                  Pay Now: <b>{total} ctx</b>
                 </button>
               </div>
             </div>
