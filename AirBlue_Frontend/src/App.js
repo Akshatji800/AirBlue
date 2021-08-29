@@ -71,7 +71,7 @@ function App() {
               path="/account/notification"
               component={NotificationView}
             />
-            <Route exact path="/category" component={ProductListView} />
+            <Route exact path="/category/:user" component={ProductListView} />
             <Route exact path="/product/detail" component={ProductDetailView} />
             <Route exact path="/star/zone" component={StarZoneView} />
             <Route exact path="/cart/:user" component={CartView} />

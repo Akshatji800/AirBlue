@@ -4,8 +4,40 @@ import { ReactComponent as IconStarFill } from "bootstrap-icons/icons/star-fill.
 import { ReactComponent as IconTruckFill } from "bootstrap-icons/icons/truck.svg";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCartPlus, faHeart } from "@fortawesome/free-solid-svg-icons";
-
+import {
+  useMutation,
+  gql
+} from "@apollo/client";
 const CardProductList = (props) => {
+  var path = window.location.pathname
+  var n = path.lastIndexOf("/");
+  var user = path.substring(n+1);
+  const ADD_CART = gql`
+    mutation addCart(
+        $name: String!
+        $user: String!
+        ){
+          addCart(
+            input: {
+              name: $name
+            user: $user
+            }
+        ) {
+          cart {
+          name
+        }
+        }
+    }
+    `
+    const [addCart, { data, loading, error }] = useMutation(ADD_CART);
+
+    const add = () => {
+      addCart({variables: {
+        name: product.name,
+        user: user
+      }})
+      window.location.reload(false);
+    }
   const product = props.data;
   return (
     <div className="card">
@@ -80,6 +112,7 @@ const CardProductList = (props) => {
               type="button"
               className="btn btn-sm btn-primary"
               title="Add to cart"
+              onClick={() => add()}
             >
               <FontAwesomeIcon icon={faCartPlus} />
             </button>
