@@ -36,16 +36,14 @@ const Header = () => {
     variables: {user: user}
   });
 
+
   return (
     <React.Fragment>
       <header className="p-3 border-bottom bg-light" >
         <div className="container-fluid">
           <div className="row g-3">
             <div className="col-md-3 text-center">
-              <Link className="navbar-brand" to={{
-        pathname: `/home/${user}`,
-        state: { authenticated: true }
-      }}>
+              <Link to="/home">
                 <img
                   alt="logo"
                   src="../../images/AirBlue.png"
@@ -57,7 +55,7 @@ const Header = () => {
             </div>
             <div className="col-md-4">
               <div className="position-relative d-inline mr-3">
-                <Link to="/cart" className="btn btn-primary">
+                <Link to={`/cart/${user}`} className="btn btn-primary">
                   <IconCart3 className="i-va" />
                   <div className="position-absolute top-0 left-100 translate-middle badge bg-danger rounded-circle">
                     2
