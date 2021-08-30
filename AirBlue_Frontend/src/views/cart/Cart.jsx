@@ -40,6 +40,9 @@ const  CartView = props => {
           star
           description
         }
+        allMiles(user: $user){
+          miles
+        }
     }
     `
      const REMOVE_CART = gql`
@@ -65,7 +68,7 @@ const  CartView = props => {
   var cartTotal = 0;
   if(data!=undefined){
     cartTotal = data['cartItems'].reduce((total, { price = 0 }) => total + price, 0);
-    console.log(cartTotal)  
+    console.log(data['allMiles'][0]['miles'])  
   }
   
   const remove = (name) => {
@@ -156,12 +159,15 @@ const  CartView = props => {
                 </table>
               </div>
               <div className="card-footer">
-                <Link to={{
+                {(data!=undefined)? ((data['allMiles'][0]['miles'] >= cartTotal) ? (
+                  <Link to={{
         pathname: `/checkout/${user}?${cartTotal}`,
         state: { authenticated: true }
       }} className="btn btn-primary float-right">
                   Make Purchase <IconChevronRight className="i-va" />
                 </Link>
+                ) : (<p className="btn btn-primary float-right">Insufficient funds</p>)) : ""}
+                
                 <Link to={{
         pathname: `/category/${user}`,
         state: { authenticated: true }
