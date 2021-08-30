@@ -9,7 +9,8 @@ https://docs.djangoproject.com/en/3.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.2/ref/settings/
 """
-
+import os
+import django_heroku
 from pathlib import Path
 from os import getenv as env
 from os import path
@@ -36,7 +37,7 @@ STATICFILES_DIRS = (
 SECRET_KEY ='awdawd'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG ='true'
+DEBUG ='false'
 
 ALLOWED_HOSTS = [
     env('DJANGO_ALLOWED_HOST', default='127.0.0.1')
@@ -174,3 +175,5 @@ if not DEBUG:
 INTERNAL_IPS = [
     '127.0.0.1',
 ]
+# Activate Django-Heroku.
+django_heroku.settings(locals())
