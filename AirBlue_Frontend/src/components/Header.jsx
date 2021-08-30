@@ -37,7 +37,6 @@ const Header = () => {
   });
 
 
-
   return (
     <React.Fragment>
       <header className="p-3 border-bottom bg-light" >
@@ -124,7 +123,7 @@ const Header = () => {
                 </ul>
               </div>
               <a>
-                AirMiles: {(data!=undefined)? data.allMiles[0].miles : "0"}
+                AirMiles: {(data!=undefined)? data.allMiles[0].miles : "0"} ams
               </a>
               {/* <Link to="/account/signin">Sign In</Link> |{" "}
               <Link to="/account/signup"> Sign Up</Link> */}

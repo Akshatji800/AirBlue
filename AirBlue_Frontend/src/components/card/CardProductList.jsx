@@ -86,10 +86,10 @@ const CardProductList = (props) => {
         <div className="col-md-3">
           <div className="card-body">
           <div className="mb-2">
-            <span className="font-weight-bold h5">{product.price}ctx</span>
+            <span className="font-weight-bold h5">{product.price}ams</span>
             {product.originPrice > 0 && (
               <del className="small text-muted ml-2">
-                {product.originPrice}ctx
+                {product.originPrice}ams
               </del>
             )}
             {(product.discountPercentage > 0 || product.discountPrice > 0) && (
@@ -97,7 +97,7 @@ const CardProductList = (props) => {
                 -
                 {product.discountPercentage > 0
                   ? product.discountPercentage + "%"
-                  : product.discountPrice}ctx
+                  : product.discountPrice}ams
               </span>
             )}
           </div>

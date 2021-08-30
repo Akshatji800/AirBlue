@@ -177,7 +177,7 @@ const CheckoutView = props =>{
               </div>
               <div className="card-footer border-info">
                 <button type="button" className="btn btn-block btn-info" onClick={() => {edit()}}>
-                  Pay Now: <b>{total} ctx</b>
+                  Pay Now: <b>{total} ams </b>
                 </button>
               </div>
             </div>

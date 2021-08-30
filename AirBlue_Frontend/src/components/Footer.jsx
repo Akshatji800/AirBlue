@@ -199,7 +199,7 @@ const Footer = () => {
               </Link>
             </div>
             <div className="col-md-3 py-2">
-              © 2009-{new Date().getFullYear()} React-E-Commerce.com
+              © 2020-{new Date().getFullYear()} <a href = "https://amfoss.in/" target = "_blank">amFOSS</a>
             </div>
             <div className="col-md-3 py-2 bg-white">
               <img

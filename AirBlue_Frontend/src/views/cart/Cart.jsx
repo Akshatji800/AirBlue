@@ -16,11 +16,11 @@ const CouponApplyForm = lazy(() =>
   import("../../components/others/CouponApplyForm")
 );
 
-const  CartView = props => {  
+const  CartView = props => {
   var path = window.location.pathname
   var n = path.lastIndexOf("/");
   var user = path.substring(n+1);
-  const [profileState, setProfileState] = useState(props);
+    const [profileState, setProfileState] = useState(props);
   console.log(profileState.location.state.authenticated)
   const LOAD_USER_CART = gql`
     query cartItems(
@@ -42,7 +42,7 @@ const  CartView = props => {
         }
     }
     `
-    const REMOVE_CART = gql`
+     const REMOVE_CART = gql`
     mutation removeCart(
         $name: String!
         $user: String!
@@ -67,7 +67,7 @@ const  CartView = props => {
     cartTotal = data['cartItems'].reduce((total, { price = 0 }) => total + price, 0);
     console.log(cartTotal)  
   }
-
+  
   const remove = (name) => {
     removeCart({variables: {
         name: name,
@@ -75,8 +75,8 @@ const  CartView = props => {
       }})
       window.location.reload(false);
   }
-  
  
+
 
 
   const renderItems = (item, index) => {
@@ -109,13 +109,13 @@ const  CartView = props => {
                       </td>
                       </td>
                       <td>
-                        <var className="price">{item.price} ctx</var>
+                        <var className="price">{item.price} ams</var>
                       </td>
                       <td className="text-right">
                         <button className="btn btn-sm btn-outline-secondary mr-2">
                           <IconHeartFill className="i-va" />
                         </button>
-                        <button className="btn btn-sm btn-outline-danger" onClick={() => remove(item.name)}>
+<button className="btn btn-sm btn-outline-danger" onClick={() => remove(item.name)}>
                           <IconTrash className="i-va" />
                         </button>
                       </td><tr />
@@ -156,7 +156,10 @@ const  CartView = props => {
                 </table>
               </div>
               <div className="card-footer">
-                <Link to={`/checkout/${user}?${cartTotal}`} className="btn btn-primary float-right">
+                <Link to={{
+        pathname: `/checkout/${user}?${cartTotal}`,
+        state: { authenticated: true }
+      }} className="btn btn-primary float-right">
                   Make Purchase <IconChevronRight className="i-va" />
                 </Link>
                 <Link to="/category" className="btn btn-secondary">
