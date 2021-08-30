@@ -162,7 +162,10 @@ const  CartView = props => {
       }} className="btn btn-primary float-right">
                   Make Purchase <IconChevronRight className="i-va" />
                 </Link>
-                <Link to="/category" className="btn btn-secondary">
+                <Link to={{
+        pathname: `/category/${user}`,
+        state: { authenticated: true }
+      }} className="btn btn-secondary">
                   <IconChevronLeft className="i-va" /> Continue shopping
                 </Link>
               </div>
