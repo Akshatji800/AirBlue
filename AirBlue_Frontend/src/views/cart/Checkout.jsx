@@ -4,6 +4,7 @@ import { ReactComponent as IconTruck } from "bootstrap-icons/icons/truck.svg";
 import { ReactComponent as IconReceipt } from "bootstrap-icons/icons/receipt.svg";
 import { ReactComponent as IconCreditCard2Front } from "bootstrap-icons/icons/credit-card-2-front.svg";
 import { ReactComponent as IconCart3 } from "bootstrap-icons/icons/cart3.svg";
+import { Link } from "react-router-dom";
 import {
   useMutation,
   gql
@@ -198,7 +199,12 @@ const CheckoutView = props =>{
               </div>
               <div className="card-footer border-info">
                 <button type="button" className="btn btn-block btn-info" onClick={() => {edit()}}>
+                <Link to={{
+        pathname: `/cart/${user}`,
+        state: { authenticated: true }
+      }} className="btn btn-primary float-right">
                   Pay Now: <b>{total} ams </b>
+                  </Link>
                 </button>
               </div>
             </div>
