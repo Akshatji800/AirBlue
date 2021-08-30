@@ -149,13 +149,6 @@ const SignUpForm = (props) => {
       <Link className="float-left" to="/" title="Sign In">
         Sign In
       </Link>
-      <Link
-        className="float-right"
-        to="/account/forgotpassword"
-        title="Forgot Password"
-      >
-        Forgot password?
-      </Link>
       <div className="clearfix"></div>
       <hr></hr>
       <div className="row">
