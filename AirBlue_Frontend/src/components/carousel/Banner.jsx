@@ -1,9 +1,14 @@
 import React from "react";
 import { Link } from "react-router-dom";
-
+var path = window.location.pathname
+  var n = path.lastIndexOf("/");
+  var user = path.substring(n+1);
 const Item = ({ item, index }) => (
   <div className={`carousel-item ${index === 0 ? "active" : ""}`}>
-    <Link to={item.to}>
+    <Link to={{
+        pathname: `/category/${user}`,
+        state: { authenticated: true }
+      }}>
       <img src={item.img} className="img-fluid" alt={item.title} />
       {(item.title || item.description) && (
         <div className="carousel-caption d-none d-md-block">

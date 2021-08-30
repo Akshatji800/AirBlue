@@ -9,7 +9,7 @@ import {
   gql
 } from "@apollo/client";
 
-const CheckoutView =props=>{
+const CheckoutView = props =>{
   var path = window.location.href
   var n = path.lastIndexOf("/");
   var m = path.lastIndexOf("?");
@@ -32,8 +32,8 @@ const CheckoutView =props=>{
         }
     }
     `
-  const [profileState, setProfileState] = useState(props);
-  console.log(profileState)
+    const [profileState, setProfileState] = useState(props);
+    console.log(profileState)
     const [editMiles, { data, loading, error }] = useMutation(EDIT_USER_MILES);
 
     const edit = () => {

@@ -3,19 +3,19 @@ export const data = {
     {
       to: "/link",
       img: "../../images/banner/Banner_3.webp",
-      title: "First slide label",
+      title: "",
       description: "Buy family daily use products from Bazzar India",
     },
     {
       to: "/link",
       img: "../../images/banner/Banner_1.webp",
-      title: "Second slide label",
+      title: "",
       description: "Buy women wear from AJIO.",
     },
     {
       to: "/link",
       img: "../../images/banner/Banner_2.webp",
-      title: "Third slide label",
+      title: "",
       description: " Buy a ice-cream from baskin robbins.",
     },
   ],

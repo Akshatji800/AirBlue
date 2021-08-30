@@ -22,6 +22,9 @@ const renderer = ({ hours, minutes, seconds, completed }) => {
 };
 
 const CardDealsOfTheDay = (props) => {
+  var path = window.location.pathname
+  var n = path.lastIndexOf("/");
+  var user = path.substring(n+1);
   return (
     <div className="card">
       <div className="card-body">
@@ -32,7 +35,10 @@ const CardDealsOfTheDay = (props) => {
             renderer={renderer}
           />
           <span className="float-right">
-            <Link to={props.to} className="btn btn-sm btn-outline-primary">
+            <Link to={{
+        pathname: `/category/${user}`,
+        state: { authenticated: true }
+      }} className="btn btn-sm btn-outline-primary">
               View All
             </Link>
           </span>

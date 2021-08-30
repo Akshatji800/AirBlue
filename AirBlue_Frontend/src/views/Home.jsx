@@ -39,6 +39,9 @@ class HomeView extends Component {
   };
 
   render() {
+  var path = window.location.pathname
+  var n = path.lastIndexOf("/");
+  var user = path.substring(n+1);
     const iconProducts = data.iconProducts;
     const rows = [...Array(Math.ceil(iconProducts.length / 4))];
     // chunk the products into the array of rows
@@ -80,7 +83,6 @@ class HomeView extends Component {
               <Support />
             </div>
             <div className="col-md-3">
-              <CardLogin className="mb-3" />
               <CardImage src="../../images/banner/Watches.webp" to="promo" />
             </div>
           </div>
@@ -107,7 +109,10 @@ class HomeView extends Component {
         <div className="container">
           <div className="row">
             <div className="col-md-3">
-              <Link to="/" className="text-decoration-none">
+              <Link to={{
+        pathname: `/category/${user}`,
+        state: { authenticated: true }
+      }} className="text-decoration-none">
                 <img
                   src="../../images/category/male.webp"
                   className="img-fluid rounded-circle"
@@ -117,7 +122,10 @@ class HomeView extends Component {
               </Link>
             </div>
             <div className="col-md-3">
-              <Link to="/" className="text-decoration-none">
+              <Link to={{
+        pathname: `/category/${user}`,
+        state: { authenticated: true }
+      }}  className="text-decoration-none">
                 <img
                   src="../../images/category/female.webp"
                   className="img-fluid rounded-circle"
@@ -127,7 +135,10 @@ class HomeView extends Component {
               </Link>
             </div>
             <div className="col-md-3">
-              <Link to="/" className="text-decoration-none">
+              <Link to={{
+        pathname: `/category/${user}`,
+        state: { authenticated: true }
+      }}  className="text-decoration-none">
                 <img
                   src="../../images/category/smartwatch.webp"
                   className="img-fluid rounded-circle"
@@ -137,7 +148,10 @@ class HomeView extends Component {
               </Link>
             </div>
             <div className="col-md-3">
-              <Link to="/" className="text-decoration-none">
+              <Link to={{
+        pathname: `/category/${user}`,
+        state: { authenticated: true }
+      }}  className="text-decoration-none">
                 <img
                   src="../../images/category/footwear.webp"
                   className="img-fluid rounded-circle"
