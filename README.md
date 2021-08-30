@@ -7,6 +7,8 @@
 <h3 align="center">AirBlue</h3>
 
 <p align="center">
+ A shopping website to use the earned AirMiles to buy daily use products.
+<p align="center">
  Frontend: Built with React JS, Bootstrap 5, Backend: Built with django, graphql 
   <br>
   <br>
@@ -21,7 +23,34 @@ Frontend: Built with React JS, Bootstrap 5, Backend: Built with django
 - [Quick start](#quick-start)
 - [What's included](#whats-included)
 - [Thanks](#thanks)
+    
+## Screenshorts
 
+![Screenshot from 2021-08-30 15-06-11](https://user-images.githubusercontent.com/73401649/131319421-78b49ef2-d39a-4cb1-8929-c9193dfb801b.png)
+<br>
+<br>
+<br>
+![Screenshot from 2021-08-30 15-05-57](https://user-images.githubusercontent.com/73401649/131319598-f020f405-ccb5-4f48-8b6b-91feaf77c578.png)
+<br>
+<br>
+<br>
+![Screenshot from 2021-08-30 14-50-54](https://user-images.githubusercontent.com/73401649/131318041-b0f258cc-e939-45a1-a0fb-d09886bb850a.png)
+<br>
+<br>
+<br>
+![Screenshot from 2021-08-30 14-51-19](https://user-images.githubusercontent.com/73401649/131318186-8f1d1da1-2b95-48bc-adcc-689ff6fbeb81.png)
+<br>
+<br>
+<br>  
+![Screenshot from 2021-08-30 14-53-23](https://user-images.githubusercontent.com/73401649/131318300-930c544a-faf4-4bba-bc7c-51e109f97b57.png)
+<br>
+<br>
+<br>
+![Screenshot from 2021-08-30 14-54-02](https://user-images.githubusercontent.com/73401649/131319133-4a173baa-687d-4c9e-8f7f-a5649c250f72.png)
+<br>
+<br>
+<br>
+    
 ## Quick start
 
 Several quick start options are available:
