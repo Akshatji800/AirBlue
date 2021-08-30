@@ -197,12 +197,12 @@ const CheckoutView = props =>{
                     </div>
                   </div>
               </div>
-              <div className="card-footer border-info">
+              <div className="btn btn-block btn-info">
                 <button type="button" className="btn btn-block btn-info" onClick={() => {edit()}}>
                 <Link to={{
         pathname: `/cart/${user}`,
         state: { authenticated: true }
-      }} className="btn btn-primary float-right">
+      }} className="btn btn-block btn-info">
                   Pay Now: <b>{total} ams </b>
                   </Link>
                 </button>
