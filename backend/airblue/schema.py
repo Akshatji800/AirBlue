@@ -188,6 +188,23 @@ class RemoveFromCart(graphene.Mutation):
             return RemoveFromCart(cart=item)
         return RemoveFromCart(cart=None)
 
+class ClearCart(graphene.Mutation):
+    class Arguments:
+        input = ItemsInput(required=True)
+    
+    cart = graphene.Field(ItemsType)
+    @staticmethod
+    def mutate(root, info, input=None):
+
+        item =  Items.objects.filter(user__username=input.user)
+        userInstance = get_user_model().objects.get(username = input.user)
+        for i in item:           
+            if i:
+                i.user.remove(userInstance.id)
+                i.save()
+                ClearCart(cart=i)
+        return ClearCart(cart=None)
+
 class Query(graphene.ObjectType):
 
     all_products = graphene.List(
@@ -294,6 +311,7 @@ class Mutation(graphene.ObjectType):
     add_cart = AddtoCart.Field()
     remove_cart = RemoveFromCart.Field()
     create_user = CreateUser.Field()
+    clear_cart = ClearCart.Field()
 
 
 
