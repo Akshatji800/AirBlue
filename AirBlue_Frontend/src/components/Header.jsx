@@ -63,9 +63,6 @@ const Header = () => {
         state: { authenticated: true }
       }} className="btn btn-primary">
                   <IconCart3 className="i-va" />
-                  <div className="position-absolute top-0 left-100 translate-middle badge bg-danger rounded-circle">
-                    2
-                  </div>
                 </Link>
               </div>
               <div className="btn-group">

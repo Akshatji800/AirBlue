@@ -32,15 +32,36 @@ const CheckoutView = props =>{
         }
     }
     `
+
+    const CLEAR_USER_CART = gql`
+    mutation clearCart(
+        $user: String!
+        ){
+          clearCart(
+            input: {
+            user: $user
+            }
+        ) {
+          cart {
+            name
+          }
+        }
+    }
+    `
     const [profileState, setProfileState] = useState(props);
     console.log(profileState)
     const [editMiles, { data, loading, error }] = useMutation(EDIT_USER_MILES);
+    const [clearCart, { cdata, cloading, cerror }] = useMutation(CLEAR_USER_CART);
 
     const edit = () => {
       editMiles({variables: {
         miles: total,
         user: user
-      }})
+      }});
+
+      clearCart({variables: {
+        user: user
+      }});
       window.location.reload(false);
     }
   return (
