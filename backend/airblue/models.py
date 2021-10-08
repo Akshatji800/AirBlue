@@ -19,6 +19,17 @@ class Miles(models.Model):
 
         verbose_name = _('Miles')
         verbose_name_plural = _('Miles')
+
+class Coupon(models.Model):
+    blacklist_user = models.ManyToManyField(User, blank=True)
+    value =models.PositiveIntegerField(
+        verbose_name=_('coupon_value'),default=1,
+    )
+    code = models.CharField(
+        max_length=128,
+        unique=True,
+        verbose_name=_('code'),
+    )
     
 class Category(models.Model):
 
