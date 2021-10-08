@@ -1,5 +1,6 @@
 from django.contrib import admin
 from .models import (
+    Coupon,
     Items,
     Order,
     Product,
@@ -119,3 +120,4 @@ class MilesAdmin(admin.ModelAdmin):
  pass
 
 admin.site.register(Items)
+admin.site.register(Coupon)

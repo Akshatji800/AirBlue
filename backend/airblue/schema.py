@@ -7,6 +7,7 @@ from graphene.types.generic import GenericScalar
 from graphql_auth import mutations
 from django.conf import settings
 from airblue.models import (
+    Coupon,
     Items,
     Miles,
     Product,
@@ -15,7 +16,7 @@ from airblue.models import (
     Category,
 )
 
-from django.db.models import When, Case, Value, Sum
+from django.db.models import When, Case, Value, Sum, fields
 
 from django.utils.translation import gettext_lazy as _
 
@@ -110,6 +111,15 @@ class ItemsType(DjangoObjectType):
             "isNew",
             "isHot",
             "isFreeShipping")
+
+class CouponType(DjangoObjectType):
+    class Meta:
+        model = Coupon
+        fields = (
+            "blacklist_user",
+            "value",
+            "code")
+        
 
 class MilesInput(graphene.InputObjectType):
     user=graphene.String()
@@ -225,8 +235,15 @@ class Query(graphene.ObjectType):
     all_items = graphene.List(ItemsType)
     cart_items = graphene.List(ItemsType,user=graphene.String(required=True))
     users = graphene.List(UserType)
+    all_coupons = graphene.List(CouponType, user=graphene.String(required=True))
 
-    def resolve_users(self, info):
+    def resolve_all_coupons(root, info, user):
+        try:
+            return Coupon.objects.exclude(blacklist_user__username=user)
+        except:
+            return None
+
+    def resolve_users(root, info):
         return get_user_model().objects.all()
 
     def resolve_all_miles(root, info, user):
@@ -237,7 +254,7 @@ class Query(graphene.ObjectType):
 
     def resolve_cart_items(root, info, user):
         try:
-            return Items.objects.filter(user__username=user).all()
+            return Items.objects.filter(user__username=user).all()  
         except:
             return None
     def resolve_all_items(root, info):
@@ -298,7 +315,7 @@ class CreateMiles(graphene.Mutation):
         userInstance = get_user_model().objects.get(username = input.user)
         miles_details = Miles.objects.create(
             user_id = userInstance.id,
-            miles = 1000
+            miles = 0
         )
         miles_details.save()
         return CreateMiles(miles_details=miles_details)
