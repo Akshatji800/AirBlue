@@ -1,10 +1,6 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import CouponList from "./CouponList";
-import {
-  useQuery,
-  gql
-} from "@apollo/client";
 
 class CouponsView extends Component {
   componentDidMount(props){
