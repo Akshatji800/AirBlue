@@ -40,6 +40,7 @@ const ContactUsView = lazy(() => import("./views/pages/ContactUs"));
 const SupportView = lazy(() => import("./views/pages/Support"));
 const BlogView = lazy(() => import("./views/blog/Blog"));
 const BlogDetailView = lazy(() => import("./views/blog/Detail"));
+const CouponsView = lazy(() => import('./views/product/Coupon'));
 
 function App() {
   return (
@@ -74,6 +75,7 @@ function App() {
             <Route exact path="/category/:user" render={(props) => <ProductListView {...props }/>}/>
             <Route exact path="/product/detail" component={ProductDetailView} />
             <Route exact path="/star/zone" component={StarZoneView} />
+            <Route exact path="/redeem/coupons" component={CouponsView} />
             <Route exact path="/cart/:user" render={(props) => <CartView {...props }/>}/>
             <Route exact path="/checkout/:user?:total" render={(props) => <CheckoutView {...props }/>}/>
             <Route exact path="/documentation" component={DocumentationView} />

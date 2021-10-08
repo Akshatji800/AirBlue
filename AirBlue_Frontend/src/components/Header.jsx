@@ -6,6 +6,7 @@ import {
   gql
 } from "@apollo/client";
 import { ReactComponent as IconCart3 } from "bootstrap-icons/icons/cart3.svg";
+import { ReactComponent as IconCoupons } from "bootstrap-icons/icons/credit-card-fill.svg";
 import { ReactComponent as IconPersonBadgeFill } from "bootstrap-icons/icons/person-badge-fill.svg";
 import { ReactComponent as IconStarFill } from "bootstrap-icons/icons/star-fill.svg";
 import { ReactComponent as IconListCheck } from "bootstrap-icons/icons/list-check.svg";
@@ -82,8 +83,8 @@ const Header = () => {
                     </Link>
                   </li>
                   <li>
-                    <Link className="dropdown-item" to="/star/zone">
-                      <IconStarFill className="text-warning" /> Star Zone
+                    <Link className="dropdown-item" to="/redeem/coupons">
+                      <IconCoupons className="text-warning" /> Redeem Coupon
                     </Link>
                   </li>
                   <li>
@@ -94,6 +95,11 @@ const Header = () => {
                   <li>
                     <Link className="dropdown-item" to="/account/wishlist">
                       <IconHeartFill className="text-danger" /> Wishlist
+                    </Link>
+                  </li>
+                  <li>
+                    <Link className="dropdown-item" to="/star/zone">
+                      <IconStarFill className="text-warning" /> Star Zone
                     </Link>
                   </li>
                   <li>

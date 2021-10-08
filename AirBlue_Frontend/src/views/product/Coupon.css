@@ -1,67 +1,9 @@
-.required:after {
-  content: " *";
-  color: red;
-}
-
-.google-maps {
-  position: relative;
-  padding-bottom: 75%;
-  height: 0;
-  overflow: hidden;
-}
-.google-maps iframe {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100% !important;
-  height: 100% !important;
-}
-
-.bg-facebook {
-  background-color: #3b5998;
-}
-.bg-twitter {
-  background-color: #1da1f2;
-}
-.bg-google {
-  background-color: #ea4335;
-}
-.bg-instagram {
-  background-color: #e1306c;
-}
-
-.bs-cover {
-  background-size: cover;
-}
-
-.r-0 {
-  right: 0;
-}
-.mw-180 {
-  max-width: 180px;
-}
-.mw-140 {
-  max-width: 140px;
-}
-.i-va {
-  vertical-align: -0.125em;
-}
-
-.miles {
-  padding: 5px;
-  margin-left: 10px;
-  box-shadow: 1px 1px;
-  background-color: yellow;
-  border-radius: 10px;
-  height: 30px;
-}
-
 body {
   height: 100vh;
-  background-color: #777;
+  background-color: #fff;
 }
 
-.container {
+.containers {
   position: relative;
   margin: 100px auto;
   background-color: #fff;
@@ -87,7 +29,7 @@ body {
   text-align: center;
 }
 
-.btn {
+.btns {
   padding: 10px 50px;
   font-size: 25px;
   font-weight: 600;
@@ -96,7 +38,7 @@ body {
   margin-bottom: 5%;
 }
 
-.btn:hover {
+.btns:hover {
   background: #32a0e9;
 }
 
@@ -118,7 +60,7 @@ body {
     font-size: 3rem;
   }
 
-  .btn {
+  .btns {
     font-size: 20px;
   }
 
@@ -143,7 +85,7 @@ body {
       no-repeat center center/cover;
   }
 
-  .container {
+  .containers {
     max-width: 100%;
     padding: 0;
     height: 580px;
@@ -154,7 +96,7 @@ body {
 }
 
 @media (max-width: 431px) {
-  .container {
+  .containers {
     max-width: 100%;
     padding: 0;
     height: 580px;
@@ -178,12 +120,12 @@ body {
       no-repeat center center/cover;
   }
 
-  .btn {
+  .btns {
     background-color: #eee;
     color: #333;
   }
 
-  .btn:hover {
+  .btns:hover {
     background-color: #7311cf;
     color: #fff;
   }
@@ -206,7 +148,7 @@ body {
     font-size: 2.9rem;
   }
 
-  .container {
+  .containers {
     height: 500px;
   }
 
