@@ -6,6 +6,7 @@ import {
   useQuery,
   gql
 } from "@apollo/client";
+import CardProductListDisabled from "./DisabledProduct";
 const Paging = lazy(() => import("../../components/Paging"));
 const Breadcrumb = lazy(() => import("../../components/Breadcrumb"));
 const FilterCategory = lazy(() => import("../../components/filter/Category"));
@@ -24,6 +25,7 @@ const CardProductList = lazy(() =>
 );
 
 const ProductListView = props => {
+  var counter = 0;
   const [currentProducts, setProducts] = useState([]);
   const LOAD_ITEMS = gql`
     query allItems{
@@ -116,11 +118,23 @@ const ProductListView = props => {
               <div className="row g-3">
                 {(data!=undefined) ? (
                   data['allItems'].map((item, index) => {
-                    return (
+                    if(counter == data['allItems'].length-1){
+                      console.log('hello');
+                      return (
+                      <div key={index} className="col-md-12">
+                        <CardProductListDisabled data={item} />
+                      </div>
+                      );
+                    }
+                    else{
+                      counter = counter+1;
+                      console.log(index);
+                      return (
                       <div key={index} className="col-md-12">
                         <CardProductList data={item} />
                       </div>
                     );
+                    }                    
                   })
                 ): ""}
               </div>
