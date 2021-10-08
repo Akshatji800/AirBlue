@@ -2,7 +2,8 @@ import React from "react"
 import "./Coupon.css";
 import {
     useQuery,
-    gql
+    gql,
+    useMutation
   } from "@apollo/client";
 
 const CouponList = () => {
@@ -22,9 +23,31 @@ const CouponList = () => {
     }
     `
 
+    const REDEEM_COUPON = gql`
+    mutation redeemMiles(
+        $user: String!
+        ){
+        redeemMiles(
+            input:{user: $user} 
+        ) {
+            redeemItem{
+              code
+            }
+          }
+    }`
+
     const { data, loading, error } = useQuery(LOAD_USER_COUPONS , {
         variables: {user: user}
       });
+
+      const [redeemUser, { reddata, redloading,rederror }] = useMutation(REDEEM_COUPON);
+      const SubmitHandler = (e)=> {e.preventDefault(); redeemUser({
+        variables: {
+          user: user,
+        },
+      });
+      window.location.reload();
+    }
       if(data!=undefined){
           console.log(data.allCoupons);
       }
@@ -43,7 +66,7 @@ const CouponList = () => {
                 <div class="h4">Redeem</div>
                 <div class="pt-5 coupon"> <i>coupon valid for One Month</i> </div>{
                    (data!=undefined && data.allCoupons.length) ? 
-                <div class="btns rounded mt-3">REDEEM NOW</div>
+                <div class="btns rounded mt-3" onClick={SubmitHandler}>REDEEM NOW</div>
                 :
                 <div class="btns rounded mt-3">ALREADY USED</div> 
                 }
