@@ -125,6 +125,9 @@ class MilesInput(graphene.InputObjectType):
     user=graphene.String()
     miles = graphene.Int()
 
+class RedeemInput(graphene.InputObjectType):
+    user=graphene.String()
+
 class ItemsInput(graphene.InputObjectType):
     name=graphene.String()
     user = graphene.String()
@@ -291,6 +294,24 @@ class Query(graphene.ObjectType):
         except Product.DoesNotExist:
             return None
 
+class RedeemAndRemove(graphene.Mutation):
+    class Arguments:
+        input = RedeemInput(required=True)
+
+    redeem_item = graphene.Field(CouponType)
+
+    @staticmethod
+    def mutate(root, info, input=None):
+        userInstance = get_user_model().objects.get(username = input.user)
+        miles_details = Miles.objects.get(user__username = input.user)
+        miles_details.miles = miles_details.miles + 1000
+        miles_details.save()
+        redeem_item  = Coupon.objects.first()
+        redeem_item.blacklist_user.add(userInstance.id)
+        redeem_item.save()
+        return RedeemAndRemove(redeem_item=redeem_item)
+
+
 class UpdateMiles(graphene.Mutation):
     class Arguments:
         input = MilesInput(required=True)
@@ -329,6 +350,7 @@ class Mutation(graphene.ObjectType):
     remove_cart = RemoveFromCart.Field()
     create_user = CreateUser.Field()
     clear_cart = ClearCart.Field()
+    redeem_miles = RedeemAndRemove.Field()
 
 
 
