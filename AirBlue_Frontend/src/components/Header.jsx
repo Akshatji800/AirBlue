@@ -83,7 +83,7 @@ const Header = () => {
                     </Link>
                   </li>
                   <li>
-                    <Link className="dropdown-item" to="/redeem/coupons">
+                    <Link className="dropdown-item" to={{pathname: `/redeem/coupons/${user}`, state: { authenticated: true } }}>
                       <IconCoupons className="text-warning" /> Redeem Coupon
                     </Link>
                   </li>

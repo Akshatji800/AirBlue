@@ -75,7 +75,7 @@ function App() {
             <Route exact path="/category/:user" render={(props) => <ProductListView {...props }/>}/>
             <Route exact path="/product/detail" component={ProductDetailView} />
             <Route exact path="/star/zone" component={StarZoneView} />
-            <Route exact path="/redeem/coupons" component={CouponsView} />
+            <Route exact path="/redeem/coupons/:user" render={(props) => <CouponsView {...props }/>}/>
             <Route exact path="/cart/:user" render={(props) => <CartView {...props }/>}/>
             <Route exact path="/checkout/:user?:total" render={(props) => <CheckoutView {...props }/>}/>
             <Route exact path="/documentation" component={DocumentationView} />
