@@ -65,10 +65,19 @@ const  CartView = props => {
 
   const {data, loading, error} = useQuery(LOAD_USER_CART, {variables:{user: user}})
   const [removeCart, { rdata, rloading, rerror }] = useMutation(REMOVE_CART);
+  const products = [];
   var cartTotal = 0;
   if(data!=undefined){
     cartTotal = data['cartItems'].reduce((total, { price = 0 }) => total + price, 0);
-    console.log(data['allMiles'][0]['miles'])  
+    console.log(data['allMiles'][0]['miles']);
+    if(data['cartItems'].length != 0){
+      var j=0;
+      for(j=0 ; j<data['cartItems'].length ; j++){
+        products.push(data['cartItems'][j]['name'])
+      }
+  
+    }
+    
   }
   
   const remove = (name) => {
@@ -162,7 +171,7 @@ const  CartView = props => {
                 {(data!=undefined)? ((data['allMiles'][0]['miles'] >= cartTotal) ? (
                   <Link to={{
         pathname: `/checkout/${user}?${cartTotal}`,
-        state: { authenticated: true }
+        state: { authenticated: true, items: products}
       }} className="btn btn-primary float-right">
                   Make Purchase <IconChevronRight className="i-va" />
                 </Link>

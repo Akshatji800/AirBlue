@@ -34,6 +34,26 @@ const CheckoutView = props =>{
     }
     `
 
+    const SEND_USER_ORDER = gql`
+    mutation createOrder(
+        $item: String!
+        $user: String!
+        $value: Int!
+        ){
+          createOrder(
+            input: {
+              item: $item
+            user: $user
+            value: $value
+            }
+        ) {
+          orderItems {
+            description
+          }
+        }
+    }
+    `
+
     const CLEAR_USER_CART = gql`
     mutation clearCart(
         $user: String!
@@ -50,14 +70,22 @@ const CheckoutView = props =>{
     }
     `
     const [profileState, setProfileState] = useState(props);
-    console.log(profileState)
+    console.log(profileState.location.state.authenticated)
+    var itemnames=profileState.location.state.items.join(',');
     const [editMiles, { data, loading, error }] = useMutation(EDIT_USER_MILES);
     const [clearCart, { cdata, cloading, cerror }] = useMutation(CLEAR_USER_CART);
+    const [sendData, { sdata, sloading, serror }] = useMutation(SEND_USER_ORDER);
 
     const edit = () => {
       editMiles({variables: {
         miles: total,
         user: user
+      }});
+
+      sendData({variables: {
+        item: itemnames,
+        user: user,
+        value: total, 
       }});
 
       clearCart({variables: {
