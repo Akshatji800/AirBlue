@@ -9,7 +9,8 @@ from .models import (
     ProductImage,
     OrderProduct,
     Category,
-    Miles
+    Miles,
+    UserOrder
 )
 from django.utils.translation import gettext_lazy as _
 from django import forms
@@ -121,3 +122,4 @@ class MilesAdmin(admin.ModelAdmin):
 
 admin.site.register(Items)
 admin.site.register(Coupon)
+admin.site.register(UserOrder)

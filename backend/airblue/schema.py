@@ -10,10 +10,12 @@ from airblue.models import (
     Coupon,
     Items,
     Miles,
+    OrderProduct,
     Product,
     ProductImage,
     ProductRemains,
     Category,
+    UserOrder,
 )
 
 from django.db.models import When, Case, Value, Sum, fields
@@ -112,6 +114,7 @@ class ItemsType(DjangoObjectType):
             "isHot",
             "isFreeShipping")
 
+
 class CouponType(DjangoObjectType):
     class Meta:
         model = Coupon
@@ -124,6 +127,11 @@ class CouponType(DjangoObjectType):
 class MilesInput(graphene.InputObjectType):
     user=graphene.String()
     miles = graphene.Int()
+
+class OrderInput(graphene.InputObjectType):
+    user=graphene.String()
+    item=graphene.String()
+    value = graphene.Int()
 
 class RedeemInput(graphene.InputObjectType):
     user=graphene.String()
@@ -341,6 +349,26 @@ class CreateMiles(graphene.Mutation):
         miles_details.save()
         return CreateMiles(miles_details=miles_details)
 
+class CreateOrder(graphene.Mutation):
+    class Arguments:
+        input = OrderInput(required=True)
+
+    order_items = graphene.Field(ItemsType)
+
+    @staticmethod
+    def mutate(root, info, input=None):
+        userInstance = get_user_model().objects.get(username = input.user)
+        length_orders = len(UserOrder.objects.all())
+        order_items = UserOrder.objects.create(total=input.value)
+        items = input.item.split(',')
+        order_items.user.add(userInstance.id)
+        for i in items:
+            itemsInstance = Items.objects.get(name=i.strip())
+            order_items.products.add(itemsInstance.id)
+        order_items.save()
+        return CreateOrder()
+
+
 
 class Mutation(graphene.ObjectType):
     token_auth = mutations.ObtainJSONWebToken.Field()
@@ -351,6 +379,7 @@ class Mutation(graphene.ObjectType):
     create_user = CreateUser.Field()
     clear_cart = ClearCart.Field()
     redeem_miles = RedeemAndRemove.Field()
+    create_order = CreateOrder.Field()
 
 
 

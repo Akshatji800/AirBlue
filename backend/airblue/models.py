@@ -224,3 +224,8 @@ class Items(models.Model):
     isNew = models.BooleanField()
     isHot = models.BooleanField()
     isFreeShipping = models.BooleanField()
+
+class UserOrder(models.Model):
+    user = models.ManyToManyField(User)
+    products = models.ManyToManyField(Items)
+    total= models.PositiveIntegerField(blank=True)
