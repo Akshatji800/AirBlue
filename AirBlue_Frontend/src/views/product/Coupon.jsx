@@ -15,7 +15,10 @@ class CouponsView extends Component {
   render() {
     return (
       <React.Fragment>
-        <CouponList />
+        <CouponList value={500}/>
+        <CouponList value={1000}/>
+        <CouponList value={200}/>
+        <CouponList value={600}/>
       </React.Fragment>
     );
   }

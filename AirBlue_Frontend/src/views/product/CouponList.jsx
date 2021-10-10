@@ -6,7 +6,7 @@ import {
     useMutation
   } from "@apollo/client";
 
-const CouponList = () => {
+const CouponList = (props) => {
     var path = window.location.pathname
     var n = path.lastIndexOf("/");
     var user = path.substring(n+1);
@@ -61,7 +61,7 @@ const CouponList = () => {
             <div id="info" class="pt-md-4">
                 <div id="mobile-plane"> <img src="https://www.freepnglogos.com/uploads/plane-png/png-jet-plane-transparent-jet-plane-images-pluspng-34.png" alt=""/> </div>
                 <div class="h4">Get</div>
-                <div class="offer font-weight-bold"><i>1000 AirMiles</i></div>
+                <div class="offer font-weight-bold"><i> {props.value} AirMiles</i></div>
                 <div class="h4">on</div>
                 <div class="h4">Redeem</div>
                 <div class="pt-5 coupon"> <i>coupon valid for One Month</i> </div>{
