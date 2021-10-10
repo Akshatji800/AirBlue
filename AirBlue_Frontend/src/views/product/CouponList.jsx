@@ -10,47 +10,84 @@ const CouponList = (props) => {
     var path = window.location.pathname
     var n = path.lastIndexOf("/");
     var user = path.substring(n+1);
+    console.log(props);
+
+
     const LOAD_USER_COUPONS = gql`
-    query allMiles(
-        $user: String!
+    query couponInfo(
+        $id: Int!
         ){
-        allCoupons(
-            user: $user
+          couponInfo(
+            id: $id
         ) {
-            code
-            value
+            used
+        }
+    }`
+
+    const CHANGE_COUPON_STATUS = gql`
+    mutation useCoupon(
+        $id: Int!
+        ){
+          useCoupon(
+            input:{
+              id: $id
+            }
+        ) {
+          couponChange {
+            miles
+          }
         }
     }
     `
 
-    const REDEEM_COUPON = gql`
-    mutation redeemMiles(
+    const INCREASE_USER_MILES = gql`
+    mutation increseMiles(
+        $miles: Int!
         $user: String!
         ){
-        redeemMiles(
-            input:{user: $user} 
-        ) {
-            redeemItem{
-              code
+          increseMiles(
+            input: {
+              miles: $miles
+            user: $user
             }
-          }
+        ) {
+          milesDetails {
+          miles
+        }
+        }
     }`
 
+
     const { data, loading, error } = useQuery(LOAD_USER_COUPONS , {
-        variables: {user: user}
+        variables: {id: props.id}
+      });
+      if(data!=undefined){
+        console.log(data.couponInfo[0]['used']);
+      }
+    
+
+      const [changeCoupon, { cdata, cloading,cerror }] = useMutation(CHANGE_COUPON_STATUS);
+
+      const [increseMiles, { idata, iloading,ierror }] = useMutation(INCREASE_USER_MILES);
+
+      const SubmitHandler = (e)=> {e.preventDefault();
+
+      changeCoupon({
+        variables: {
+          id: props.id,
+        },
       });
 
-      const [redeemUser, { reddata, redloading,rederror }] = useMutation(REDEEM_COUPON);
-      const SubmitHandler = (e)=> {e.preventDefault(); redeemUser({
+      increseMiles({
         variables: {
+          miles: props.value,
           user: user,
         },
       });
+
+      
       window.location.reload();
     }
-      if(data!=undefined){
-          console.log(data.allCoupons);
-      }
       
 
     return <React.Fragment>
@@ -65,7 +102,7 @@ const CouponList = (props) => {
                 <div class="h4">on</div>
                 <div class="h4">Redeem</div>
                 <div class="pt-5 coupon"> <i>coupon valid for One Month</i> </div>{
-                   (data!=undefined && data.allCoupons.length) ? 
+                   (data!=undefined && !data.couponInfo[0]['used']) ? 
                 <div class="btns rounded mt-3" onClick={SubmitHandler}>REDEEM NOW</div>
                 :
                 <div class="btns rounded mt-3">ALREADY USED</div> 

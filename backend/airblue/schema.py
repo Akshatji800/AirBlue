@@ -7,6 +7,7 @@ from graphene.types.generic import GenericScalar
 from graphql_auth import mutations
 from django.conf import settings
 from airblue.models import (
+    CommonCoupon,
     Coupon,
     Items,
     Miles,
@@ -122,11 +123,24 @@ class CouponType(DjangoObjectType):
             "blacklist_user",
             "value",
             "code")
-        
+    
+
+class CommonCouponType(DjangoObjectType):
+    class Meta:
+        model = CommonCoupon
+        fields = ("id"
+            "value",
+            "code",
+            "used",
+            )
+
 
 class MilesInput(graphene.InputObjectType):
     user=graphene.String()
     miles = graphene.Int()
+
+class CouponInput(graphene.InputObjectType):
+    id = graphene.Int()
 
 class OrderInput(graphene.InputObjectType):
     user=graphene.String()
@@ -247,6 +261,13 @@ class Query(graphene.ObjectType):
     cart_items = graphene.List(ItemsType,user=graphene.String(required=True))
     users = graphene.List(UserType)
     all_coupons = graphene.List(CouponType, user=graphene.String(required=True))
+    coupon_info= graphene.List(CommonCouponType, id=graphene.Int(required=True))
+
+    def resolve_coupon_info(root, info, id):
+        try:
+            return CommonCoupon.objects.filter(id=id).all()
+        except:
+            return None
 
     def resolve_all_coupons(root, info, user):
         try:
@@ -333,6 +354,19 @@ class UpdateMiles(graphene.Mutation):
         miles_details.save()
         return UpdateMiles(miles_details=miles_details)
 
+class IncreaseMiles(graphene.Mutation):
+    class Arguments:
+        input = MilesInput(required=True)
+
+    miles_details = graphene.Field(MilesType)
+
+    @staticmethod
+    def mutate(root, info, input=None):
+        miles_details = Miles.objects.get(user__username = input.user)
+        miles_details.miles = miles_details.miles + input.miles
+        miles_details.save()
+        return IncreaseMiles(miles_details=miles_details)
+
 class CreateMiles(graphene.Mutation):
     class Arguments:
         input = MilesInput(required=True)
@@ -368,11 +402,22 @@ class CreateOrder(graphene.Mutation):
         order_items.save()
         return CreateOrder()
 
+class UseCoupon(graphene.Mutation):
+    class Arguments:
+        input = CouponInput(required=True)
 
+    coupon_change = graphene.Field(MilesType)
+
+    def mutate(root, info, input=None):
+        couponInstance = CommonCoupon.objects.get(id=input.id)
+        couponInstance.used = True
+        couponInstance.save()
+        return UseCoupon()
 
 class Mutation(graphene.ObjectType):
     token_auth = mutations.ObtainJSONWebToken.Field()
     update_miles = UpdateMiles.Field()
+    increse_miles = IncreaseMiles.Field()
     create_miles = CreateMiles.Field()
     add_cart = AddtoCart.Field()
     remove_cart = RemoveFromCart.Field()
@@ -380,6 +425,7 @@ class Mutation(graphene.ObjectType):
     clear_cart = ClearCart.Field()
     redeem_miles = RedeemAndRemove.Field()
     create_order = CreateOrder.Field()
+    use_coupon = UseCoupon.Field()
 
 
 

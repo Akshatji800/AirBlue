@@ -229,3 +229,14 @@ class UserOrder(models.Model):
     user = models.ManyToManyField(User)
     products = models.ManyToManyField(Items)
     total= models.PositiveIntegerField(blank=True)
+
+class CommonCoupon(models.Model):
+    value =models.PositiveIntegerField(
+        verbose_name=_('coupon_value'),default=1,
+    )
+    code = models.CharField(
+        max_length=128,
+        unique=True,
+        verbose_name=_('code'),
+    )
+    used = models.BooleanField(default=False)
