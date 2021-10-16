@@ -53,6 +53,10 @@ Frontend: Built with React JS, Bootstrap 5, Backend: Built with django
     
 ## Quick start
 
+### Using docker
+- To run do `docker-compose up -d`.
+- To create super user do `docker-compose exec backend python manage.py createsuperuser`
+
 Several quick start options are available:
 
 - [Download the latest branch](https://github.com/Akshatji800/AirBlue/archive/refs/heads/master.zip)
