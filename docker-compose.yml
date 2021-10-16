@@ -1,0 +1,19 @@
+version: "3.8"
+services:
+  backend:
+    image: backend
+    build:
+      context: .
+    command: "python manage.py runserver"
+    ports:
+      - "8080:8080"
+  frontend:
+    image: frontend
+    build:
+      context: AirBlue_Frontend
+      dockerfile: Dockerfile
+    command: "npm start"
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
