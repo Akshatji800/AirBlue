@@ -40,7 +40,7 @@ SECRET_KEY ='awdawd'
 DEBUG ='false'
 
 ALLOWED_HOSTS = [
-    env('DJANGO_ALLOWED_HOST', default='127.0.0.1')
+    env('DJANGO_ALLOWED_HOST', default='0.0.0.0')
 ]
 
 
@@ -174,6 +174,7 @@ if not DEBUG:
 
 INTERNAL_IPS = [
     '127.0.0.1',
+    '0.0.0.0',
 ]
 # Activate Django-Heroku.
 django_heroku.settings(locals())
