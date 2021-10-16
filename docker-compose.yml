@@ -3,16 +3,15 @@ services:
   backend:
     image: backend
     build:
-      context: .
-    command: "python manage.py runserver"
+      context: backend
+    environment:
+      - DJANGO_ALLOWED_HOST='0.0.0.0'
     ports:
-      - "8080:8080"
+      - "8000:8000"
   frontend:
     image: frontend
     build:
-      context: AirBlue_Frontend
-      dockerfile: Dockerfile
-    command: "npm start"
+      context: frontend
     ports:
       - "80:80"
     depends_on:
