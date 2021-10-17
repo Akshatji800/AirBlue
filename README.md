@@ -1,7 +1,7 @@
 # AirBlue
 
 <p align="center">
-    <img src="AirBlue_Frontend/public/images/banner/Dell.png" alt="RBE logo" target="_blank" width="200" height="165">
+    <img src="frontend/public/images/banner/Dell.png" alt="RBE logo" target="_blank" width="200" height="165">
   </a>
 </p>
 <h3 align="center">AirBlue</h3>
