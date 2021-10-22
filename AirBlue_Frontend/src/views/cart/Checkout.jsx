@@ -7,10 +7,17 @@ import { ReactComponent as IconCart3 } from "bootstrap-icons/icons/cart3.svg";
 import { Link } from "react-router-dom";
 import {
   useMutation,
-  gql
+  gql,
+  useQuery
 } from "@apollo/client";
 
 const CheckoutView = props =>{
+  const [name, setName] = useState("")
+  const [number, setNumber] = useState("")
+  const [month, setMonth] = useState("")
+  const [year, setYear] = useState("")
+  const [cvv, setCVV] = useState("")
+
   var path = window.location.href
   var n = path.lastIndexOf("/");
   var m = path.lastIndexOf("?");
@@ -33,6 +40,7 @@ const CheckoutView = props =>{
         }
     }
     `
+    
 
     const SEND_USER_ORDER = gql`
     mutation createOrder(
@@ -69,14 +77,77 @@ const CheckoutView = props =>{
         }
     }
     `
+    const GET_CARD= gql`
+    query getCard(
+        $user: String!
+        ){
+        cards(
+            user: $user
+        ) {
+            name
+            number
+            month
+            year
+            cvv
+        }
+    }
+    `
+
+    const CREATE_USER_CARD = gql`
+    mutation createCard(
+        $user: String!
+        $name: String!
+        $number: String!
+        $month: String!
+        $year: String!
+        $cvv: String!
+        ){
+          createCard(
+            input: {
+            user: $user,
+            name: $name,
+            number: $number,
+            month: $month,
+            year: $year,
+            cvv: $cvv,
+            }
+        ) {
+          card {
+            cvv
+            month
+            name
+            number
+            year
+          }
+        }
+    }
+    `
     const [profileState, setProfileState] = useState(props);
     console.log(profileState.location.state.authenticated)
     var itemnames=profileState.location.state.items.join(',');
-    const [editMiles, { data, loading, error }] = useMutation(EDIT_USER_MILES);
+    const [createCard, { adddata, addloading, adderror }] = useMutation(CREATE_USER_CARD);
+    const [editMiles, { edata, eloading, eerror }] = useMutation(EDIT_USER_MILES);
+    const { data, loading, error } = useQuery(GET_CARD, {
+      variables: {user: user}
+  });
+
     const [clearCart, { cdata, cloading, cerror }] = useMutation(CLEAR_USER_CART);
     const [sendData, { sdata, sloading, serror }] = useMutation(SEND_USER_ORDER);
 
     const edit = () => {
+      if(data!=undefined && data.cards.length == 0){
+        createCard({
+          variables:{
+            user: user,
+            name: name,
+            number: number,
+            month: month,
+            year: year,
+            cvv: cvv
+          }
+        });
+      }
+
       editMiles({variables: {
         miles: total,
         user: user
@@ -225,6 +296,106 @@ const CheckoutView = props =>{
                     </div>
                   </div>
               </div>
+              {(data!=undefined && data.cards.length != 0) ? (
+                <div className="card-body">
+                <div className="row g-3 mb-3 border-bottom">
+                <div className="row g-3">
+                    <div className="col-md-6">
+                      <input
+                        type="text"
+                        className="form-control"
+                        placeholder="Name on card"
+                        value={(data!=undefined && data.cards.length != 0) ? data.cards[0]["name"] : ""}
+                        onChange={(e) => setName(e.target.value)}
+                      />
+                    </div>
+                    <div className="col-md-6">
+                      <input
+                        type="number"
+                        className="form-control"
+                        placeholder="Card number"
+                        value={(data!=undefined && data.cards.length != 0) ? data.cards[0]["number"] : ""}
+                        onChange={(e) => setNumber(e.target.value)}
+                      />
+                    </div>
+                    <div className="col-md-4">
+                      <input
+                        type="number"
+                        className="form-control"
+                        placeholder="Expiration month"
+                        value={(data!=undefined && data.cards.length != 0) ? data.cards[0]["month"] : ""}
+                        onChange={(e) => setMonth(e.target.value)}
+                      />
+                    </div>
+                    <div className="col-md-4">
+                      <input
+                        type="number"
+                        className="form-control"
+                        placeholder="Expiration year"
+                        value={(data!=undefined && data.cards.length != 0) ? data.cards[0]["year"] : ""}
+                        onChange={(e) => setYear(e.target.value)}
+                      />
+                    </div>
+                    <div className="col-md-4">
+                      <input
+                        type="number"
+                        className="form-control"
+                        placeholder="CVV"
+                        value={(data!=undefined && data.cards.length != 0) ? data.cards[0]["cvv"] : ""}
+                        onChange={(e) => setCVV(e.target.value)}
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+              ) :(
+                <div className="card-body">
+                <div className="row g-3 mb-3 border-bottom">
+                <div className="row g-3">
+                    <div className="col-md-6">
+                      <input
+                        type="text"
+                        className="form-control"
+                        placeholder="Name on card"
+                        onChange={(e) => setName(e.target.value)}
+                      />
+                    </div>
+                    <div className="col-md-6">
+                      <input
+                        type="number"
+                        className="form-control"
+                        placeholder="Card number"
+                        onChange={(e) => setNumber(e.target.value)}
+                      />
+                    </div>
+                    <div className="col-md-4">
+                      <input
+                        type="number"
+                        className="form-control"
+                        placeholder="Expiration month"
+                        onChange={(e) => setMonth(e.target.value)}
+                      />
+                    </div>
+                    <div className="col-md-4">
+                      <input
+                        type="number"
+                        className="form-control"
+                        placeholder="Expiration year"
+                        onChange={(e) => setYear(e.target.value)}
+                      />
+                    </div>
+                    <div className="col-md-4">
+                      <input
+                        type="number"
+                        className="form-control"
+                        placeholder="CVV"
+                        onChange={(e) => setCVV(e.target.value)}
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+              )}
               <div className="btn btn-block btn-info">
                 <button type="button" className="btn btn-block btn-info" onClick={() => {edit()}}>
                 <Link to={{
