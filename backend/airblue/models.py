@@ -240,3 +240,16 @@ class CommonCoupon(models.Model):
         verbose_name=_('code'),
     )
     used = models.BooleanField(default=False)
+
+class Card(models.Model):
+    user = models.ForeignKey(
+        User,
+        null=True,
+        on_delete=models.CASCADE,
+        verbose_name=_('User'),
+    )
+    name = models.CharField(max_length=100)
+    number = models.CharField(max_length=50)
+    month = models.CharField(max_length=10)
+    year = models.CharField(max_length=10)
+    cvv = models.CharField(max_length=10)

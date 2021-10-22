@@ -17,6 +17,7 @@ from airblue.models import (
     ProductRemains,
     Category,
     UserOrder,
+    Card,
 )
 
 from django.db.models import When, Case, Value, Sum, fields
@@ -133,7 +134,10 @@ class CommonCouponType(DjangoObjectType):
             "code",
             "used",
             )
-
+class CardType(DjangoObjectType):
+    class Meta:
+        model = Card
+        fields = ("user", "name", "number", "month", "year", "cvv")
 
 class MilesInput(graphene.InputObjectType):
     user=graphene.String()
@@ -153,6 +157,14 @@ class RedeemInput(graphene.InputObjectType):
 class ItemsInput(graphene.InputObjectType):
     name=graphene.String()
     user = graphene.String()
+
+class CardInput(graphene.InputObjectType):
+    user=graphene.String()
+    name=graphene.String()
+    number=graphene.String()
+    month=graphene.String()
+    year=graphene.String()
+    cvv=graphene.String()
 
 class ProductRemainsType(DjangoObjectType):
 
@@ -262,10 +274,17 @@ class Query(graphene.ObjectType):
     users = graphene.List(UserType)
     all_coupons = graphene.List(CouponType, user=graphene.String(required=True))
     coupon_info= graphene.List(CommonCouponType, id=graphene.Int(required=True))
+    cards = graphene.List(CardType, user=graphene.String(required=True))
 
     def resolve_coupon_info(root, info, id):
         try:
             return CommonCoupon.objects.filter(id=id).all()
+        except:
+            return None
+    
+    def resolve_cards(self, info, user):
+        try:
+            return Card.objects.filter(user__username=user).all()
         except:
             return None
 
@@ -340,6 +359,25 @@ class RedeemAndRemove(graphene.Mutation):
         redeem_item.save()
         return RedeemAndRemove(redeem_item=redeem_item)
 
+class CreateCard(graphene.Mutation):
+    class Arguments:
+        input = CardInput(required=True)
+
+    card = graphene.Field(CardType)
+
+    @staticmethod
+    def mutate(root, info, input=None):
+        userInstance = get_user_model().objects.get(username = input.user)
+        card = Card.objects.create(
+            user_id = userInstance.id,
+            name = input.name,
+            number = input.number,
+            month = input.month,
+            year = input.year,
+            cvv = input.cvv
+        )
+        card.save()
+        return  CreateCard(card=card)
 
 class UpdateMiles(graphene.Mutation):
     class Arguments:
@@ -426,6 +464,7 @@ class Mutation(graphene.ObjectType):
     redeem_miles = RedeemAndRemove.Field()
     create_order = CreateOrder.Field()
     use_coupon = UseCoupon.Field()
+    create_card = CreateCard.Field()
 
 
 
