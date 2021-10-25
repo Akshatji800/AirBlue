@@ -86,7 +86,7 @@ const CouponList = (props) => {
       });
 
       
-      window.location.reload();
+      //window.location.reload();
     }
       
 

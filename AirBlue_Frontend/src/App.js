@@ -15,7 +15,7 @@ import {
 } from "@apollo/client";
 
 const client = new ApolloClient({
-  uri: 'http://127.0.0.1:8000/api',
+  uri: '/api',
   cache: new InMemoryCache()
 });
 //const Header = lazy(() => import("./components/Header"));

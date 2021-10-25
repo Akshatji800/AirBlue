@@ -37,7 +37,7 @@ STATICFILES_DIRS = (
 SECRET_KEY ='awdawd'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG ='false'
+DEBUG ='true'
 
 ALLOWED_HOSTS = [
     env('DJANGO_ALLOWED_HOST', default='127.0.0.1')
