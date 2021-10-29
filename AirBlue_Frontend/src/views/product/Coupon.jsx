@@ -3,11 +3,6 @@ import { Link } from "react-router-dom";
 import CouponList from "./CouponList";
 
 class CouponsView extends Component {
-  componentDidMount(props){
-    if(this.props.location.state == undefined){
-     console.log(this.props.location.state.authenticated) 
-    }
-  }
   constructor(props) {
     super();
     this.state = {};

@@ -22,11 +22,6 @@ const CardDealsOfTheDay = lazy(() =>
 );
 
 class HomeView extends Component {
-  componentDidMount(props){
-    if(this.props.location.state == undefined){
-     console.log(this.props.location.state.authenticated) 
-    }
-  }
   components = {
     IconLaptop: IconLaptop,
     IconHeadset: IconHeadset,
@@ -60,7 +55,7 @@ class HomeView extends Component {
                   title={product.title}
                   text={product.text}
                   tips={product.tips}
-                  to={product.to}
+                  to={`/category/${user}`}
                 >
                   <ProductImage className={product.cssClass} />
                 </CardIcon>

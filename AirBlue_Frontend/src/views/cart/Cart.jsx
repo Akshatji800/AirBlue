@@ -21,7 +21,6 @@ const  CartView = props => {
   var n = path.lastIndexOf("/");
   var user = path.substring(n+1);
     const [profileState, setProfileState] = useState(props);
-  console.log(profileState.location.state.authenticated)
   const LOAD_USER_CART = gql`
     query cartItems(
         $user: String!
@@ -108,7 +107,6 @@ const  CartView = props => {
                               to="/product/detail"
                               className="text-decoration-none"
                             >
-                              
                                {item.name}
                             </Link>
                           

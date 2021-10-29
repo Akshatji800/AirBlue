@@ -123,7 +123,6 @@ const CheckoutView = props =>{
     }
     `
     const [profileState, setProfileState] = useState(props);
-    console.log(profileState.location.state.authenticated)
     var itemnames=profileState.location.state.items.join(',');
     const [createCard, { adddata, addloading, adderror }] = useMutation(CREATE_USER_CARD);
     const [editMiles, { edata, eloading, eerror }] = useMutation(EDIT_USER_MILES);
