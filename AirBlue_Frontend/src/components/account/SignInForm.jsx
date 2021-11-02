@@ -1,7 +1,7 @@
-import React , {useState} from "react";
+import React , {useEffect, useState} from "react";
 import { Field, reduxForm } from "redux-form";
 import { compose } from "redux";
-import { Link } from "react-router-dom";
+import { Link, useHistory} from "react-router-dom";
 import { Redirect } from "react-router-dom/cjs/react-router-dom.min";
 import {
   useMutation,
@@ -27,7 +27,21 @@ import { ReactComponent as IconPhoneFill } from "bootstrap-icons/icons/envelope-
 import { ReactComponent as IconShieldLockFill } from "bootstrap-icons/icons/shield-lock-fill.svg";
 
 const SignInForm = (props) => {
-  const { handleSubmit, submitting, onSubmit, submitFailed } = props;
+  let history = useHistory();
+  useEffect(() => {
+    console.log('hello');
+    if(status){
+      history.push(
+        {
+  
+            pathname: `/home/${username}`,
+            state: { authenticated: true }}
+
+      );
+    }
+  }, []);
+  const { handleSubmit, submitting, onSubmit, submitFailed,  } = props;
+  const [toggle, setToggle] = useState(false);
   const [status, setStatus] = useState(false);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -49,31 +63,32 @@ const SignInForm = (props) => {
     }
     `
   const [getUser, { data, loading, error }] = useMutation(LOAD_USER_lOGIN);
-  const SubmitHandler = (e)=> {e.preventDefault(); getUser({
+  const SubmitHandler = (e)=> {e.preventDefault();
+    getUser({
       variables: {
         username: username,
         password: password,
       },
     });
-  if(data!=undefined){if(data.tokenAuth.success){
-    setStatus(true);
-  }else{
-    setInvalid(true); 
-  };}}
+  setToggle(true);};
   
+  
+  if(toggle && data != undefined && data.tokenAuth.success){
+    if(data.tokenAuth.success){
+      history.push(
+        {
+          pathname: `/home/${username}`,
+          state: { authenticated: true }
+        }
+      )
+    }
+  }
   return (
     <form
       onSubmit={SubmitHandler}
       className={`needs-validation ${submitFailed ? "was-validated" : ""}`}
       noValidate
     >
-      {status? (
-        <Redirect
-        to={{
-        pathname: `/home/${username}`,
-        state: { authenticated: true }
-      }}
-    />):(
         <div>
         {invalid ? "Invalid username/password" : ""}
           <Field
@@ -133,9 +148,6 @@ const SignInForm = (props) => {
         </div>
       </div>
         </div>
-      )}
-      
-      
     </form>
   );
 };

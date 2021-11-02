@@ -60,7 +60,7 @@ class HomeView extends Component {
                   title={product.title}
                   text={product.text}
                   tips={product.tips}
-                  to={product.to}
+                  to={`/category/${user}`}
                 >
                   <ProductImage className={product.cssClass} />
                 </CardIcon>

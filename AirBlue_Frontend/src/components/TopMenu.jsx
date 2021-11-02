@@ -36,36 +36,6 @@ const TopMenu = () => {
                   Fashion
                 </Link>
               </li>
-              <li className="nav-item">
-                <Link className="nav-link" to="/category">
-                  Supermarket
-                </Link>
-              </li>
-              <li className="nav-item">
-                <Link className="nav-link" to="/category">
-                  Electronics
-                </Link>
-              </li>
-              <li className="nav-item">
-                <Link className="nav-link" to="/category">
-                  Furniture
-                </Link>
-              </li>
-              <li className="nav-item">
-                <Link className="nav-link" to="/category">
-                  Garden & Outdoors
-                </Link>
-              </li>
-              <li className="nav-item">
-                <Link className="nav-link" to="/category">
-                  Jewellery
-                </Link>
-              </li>
-              <li className="nav-item">
-                <Link className="nav-link" to="/documentation">
-                  Documentation
-                </Link>
-              </li>
             </ul>
           </div>
         </div>

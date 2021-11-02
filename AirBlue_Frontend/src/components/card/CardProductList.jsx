@@ -36,7 +36,7 @@ const CardProductList = (props) => {
         name: product.name,
         user: user
       }})
-      //window.location.reload(false);
+      window.location.reload(false);
     }
   const product = props.data;
   return (

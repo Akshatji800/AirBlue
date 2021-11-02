@@ -66,13 +66,6 @@ const ProductListView = props => {
         <div className="container-fluid mb-3">
           <div className="row">
             <div className="col-md-3">
-              <FilterCategory />
-              <FilterPrice />
-              <FilterSize />
-              <FilterStar />
-              <FilterColor />
-              <FilterClear />
-              <FilterTag />
               <CardServices />
             </div>
             <div className="col-md-9">
