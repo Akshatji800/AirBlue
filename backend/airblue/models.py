@@ -253,3 +253,11 @@ class Card(models.Model):
     month = models.CharField(max_length=10)
     year = models.CharField(max_length=10)
     cvv = models.CharField(max_length=10)
+
+class RedeemedUser(models.Model):
+    user = models.ForeignKey(
+            User,
+            on_delete=models.CASCADE,
+            verbose_name=_('User'),
+        )
+    redeemed = models.BooleanField()

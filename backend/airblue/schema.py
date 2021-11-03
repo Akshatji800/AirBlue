@@ -18,6 +18,7 @@ from airblue.models import (
     Category,
     UserOrder,
     Card,
+    RedeemedUser,
 )
 
 from django.db.models import When, Case, Value, Sum, fields
@@ -134,6 +135,12 @@ class CommonCouponType(DjangoObjectType):
             "code",
             "used",
             )
+
+class CouponStatusType(DjangoObjectType):
+    class Meta:
+        model = RedeemedUser
+        fields = ("id", "user", "redeemed")
+
 class CardType(DjangoObjectType):
     class Meta:
         model = Card
@@ -144,7 +151,7 @@ class MilesInput(graphene.InputObjectType):
     miles = graphene.Int()
 
 class CouponInput(graphene.InputObjectType):
-    id = graphene.Int()
+    couponCode = graphene.String()
 
 class OrderInput(graphene.InputObjectType):
     user=graphene.String()
@@ -273,12 +280,19 @@ class Query(graphene.ObjectType):
     cart_items = graphene.List(ItemsType,user=graphene.String(required=True))
     users = graphene.List(UserType)
     all_coupons = graphene.List(CouponType, user=graphene.String(required=True))
-    coupon_info= graphene.List(CommonCouponType, id=graphene.Int(required=True))
+    coupon_info= graphene.List(CommonCouponType)
     cards = graphene.List(CardType, user=graphene.String(required=True))
+    show_redeem_status = graphene.List(CouponStatusType, user=graphene.String(required=True))
 
-    def resolve_coupon_info(root, info, id):
+    def resolve_show_redeem_status(self, info, user):
         try:
-            return CommonCoupon.objects.filter(id=id).all()
+            return RedeemedUser.objects.filter(user__username=user).all()
+        except:
+            return None
+
+    def resolve_coupon_info(root, info):
+        try:
+            return CommonCoupon.objects.filter(used=False).all()
         except:
             return None
     
@@ -358,6 +372,33 @@ class RedeemAndRemove(graphene.Mutation):
         redeem_item.blacklist_user.add(userInstance.id)
         redeem_item.save()
         return RedeemAndRemove(redeem_item=redeem_item)
+
+class RedeemedStatus(graphene.Mutation):
+    class Arguments:
+        input = RedeemInput(required=True)
+
+    redeem_item = graphene.Field(CouponStatusType)
+
+    @staticmethod
+    def mutate(root, info, input=None):
+        userInstance = get_user_model().objects.get(username = input.user)
+        redeem_item  = RedeemedUser.objects.create(user=userInstance, redeemed=False)
+        redeem_item.save()
+        return RedeemedStatus(redeem_item=redeem_item)
+
+class changeRedeemStatus(graphene.Mutation):
+    class Arguments:
+        input = RedeemInput(required=True)
+
+    redeem_item = graphene.Field(CouponStatusType)
+
+    @staticmethod
+    def mutate(root, info, input=None):
+        userInstance = get_user_model().objects.get(username = input.user)
+        redeem_item  = RedeemedUser.objects.get(user=userInstance)
+        redeem_item.redeemed = True
+        redeem_item.save()
+        return RedeemedStatus(redeem_item=redeem_item)
 
 class CreateCard(graphene.Mutation):
     class Arguments:
@@ -447,7 +488,7 @@ class UseCoupon(graphene.Mutation):
     coupon_change = graphene.Field(MilesType)
 
     def mutate(root, info, input=None):
-        couponInstance = CommonCoupon.objects.get(id=input.id)
+        couponInstance = CommonCoupon.objects.get(code=input.couponCode)
         couponInstance.used = True
         couponInstance.save()
         return UseCoupon()
@@ -465,6 +506,8 @@ class Mutation(graphene.ObjectType):
     create_order = CreateOrder.Field()
     use_coupon = UseCoupon.Field()
     create_card = CreateCard.Field()
+    redeemed_status = RedeemedStatus.Field()
+    change_redeemed_status = changeRedeemStatus.Field()
 
 
 

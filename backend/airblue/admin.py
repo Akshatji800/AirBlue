@@ -12,7 +12,8 @@ from .models import (
     Category,
     Miles,
     UserOrder,
-    Card
+    Card,
+    RedeemedUser
 )
 from django.utils.translation import gettext_lazy as _
 from django import forms
@@ -127,3 +128,4 @@ admin.site.register(Coupon)
 admin.site.register(UserOrder)
 admin.site.register(CommonCoupon)
 admin.site.register(Card)
+admin.site.register(RedeemedUser)
