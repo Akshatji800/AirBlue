@@ -162,7 +162,7 @@ const CheckoutView = props =>{
       clearCart({variables: {
         user: user
       }});
-      window.location.reload(false);
+      window.location.reload(true);
     }
   return (
     <React.Fragment>

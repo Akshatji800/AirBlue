@@ -36,6 +36,7 @@ const CardProductList = (props) => {
         name: product.name,
         user: user
       }})
+      console.log('added to cart');
       window.location.reload(false);
     }
   const product = props.data;

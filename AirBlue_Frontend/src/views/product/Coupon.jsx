@@ -1,24 +1,41 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import CouponList from "./CouponList";
+import {
+  useQuery,
+  gql
+} from "@apollo/client";
+import { data } from "../../data";
 
-class CouponsView extends Component {
-  componentDidMount(props){
-    if(this.props.location.state == undefined){
-     console.log(this.props.location.state.authenticated) 
+const CouponsView = (props) => {
+
+  var path = window.location.pathname
+  var n = path.lastIndexOf("/");
+  var user = path.substring(n+1);
+
+  const LOAD_USER_COUPONS = gql`
+  query MyQuery (
+    $user: String!
+    ){
+    couponInfo {
+      code
+      used
+    }
+    showRedeemStatus(user: $user) {
+      redeemed
     }
   }
-  constructor(props) {
-    super();
-    this.state = {};
-  }
-  render() {
+  `
+  
+  const { data, loading, error } = useQuery(LOAD_USER_COUPONS, {
+    variables: {user: user}
+  });
+  
     return (
       <React.Fragment>
-        <CouponList value={1000} id={1}/>
+        {(data!=undefined && data.couponInfo.length != 0)? <CouponList value={1000} id={data.couponInfo[0]['code']} status={data.showRedeemStatus[0].redeemed}/>: <></>}
       </React.Fragment>
     );
-  }
 }
 
 export default CouponsView;

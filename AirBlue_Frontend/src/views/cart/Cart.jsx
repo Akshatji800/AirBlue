@@ -202,22 +202,12 @@ const  CartView = props => {
         <div className="container">
           <h6>Payment and refund policy</h6>
           <p>
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-            enim ad minim veniam, quis nostrud exercitation ullamco laboris
-            nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
-            reprehenderit in voluptate velit esse cillum dolore eu fugiat
-            nulla pariatur. Excepteur sint occaecat cupidatat non proident,
-            sunt in culpa qui officia deserunt mollit anim id est laborum.
-          </p>
-          <p>
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-            enim ad minim veniam, quis nostrud exercitation ullamco laboris
-            nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
-            reprehenderit in voluptate velit esse cillum dolore eu fugiat
-            nulla pariatur. Excepteur sint occaecat cupidatat non proident,
-            sunt in culpa qui officia deserunt mollit anim id est laborum.
+            Important: If you don't find your purchase on the recent purchases list, request a refund from the AirBlue website.
+            Follow the instructions if:
+
+            It’s less than 48 hours since you bought a product, you can request a refund through AirBlue.
+            You bought fashion items, you may be able to request a refund after more than 48 hours (check policy below).
+            You’ll usually get a decision within 1 business day but it can take up to 4 business days.
           </p>
         </div>
       </div>

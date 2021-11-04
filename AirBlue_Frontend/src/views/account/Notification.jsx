@@ -33,8 +33,7 @@ class NotificationView extends Component {
               </span>
             </div>
             <p className="mb-1">
-              Donec id elit non mi porta gravida at eget metus. Maecenas sed
-              diam eget risus varius blandit.
+              Brand new offers.
             </p>
           </Link>
           <Link to="/" className="list-group-item list-group-item-action">
@@ -47,8 +46,7 @@ class NotificationView extends Component {
               </span>
             </div>
             <p className="mb-1">
-              Donec id elit non mi porta gravida at eget metus. Maecenas sed
-              diam eget risus varius blandit.
+              New coupons for first time users.
             </p>
           </Link>
           <Link to="/" className="list-group-item list-group-item-action">
@@ -61,10 +59,9 @@ class NotificationView extends Component {
               </span>
             </div>
             <p className="mb-1">
-              Donec id elit non mi porta gravida at eget metus. Maecenas sed
-              diam eget risus varius blandit.
+              Fashion items price dropped.
             </p>
-            <small className="text-muted">Donec id elit non mi porta.</small>
+            <small className="text-muted">Hurry Up!.</small>
           </Link>
           <Link to="/" className="list-group-item list-group-item-action bg-success text-white">
             <div className="d-flex w-100 justify-content-between">
@@ -76,8 +73,7 @@ class NotificationView extends Component {
               </span>
             </div>
             <p className="mb-1">
-              Donec id elit non mi porta gravida at eget metus. Maecenas sed
-              diam eget risus varius blandit.
+              Your order has been placed.
             </p>
           </Link>
           <Link to="/" className="list-group-item list-group-item-action bg-danger text-white">
@@ -90,8 +86,7 @@ class NotificationView extends Component {
               </span>
             </div>
             <p className="mb-1">
-              Donec id elit non mi porta gravida at eget metus. Maecenas sed
-              diam eget risus varius blandit.
+              Your order has been cancelled.
             </p>
           </Link>
         </div>

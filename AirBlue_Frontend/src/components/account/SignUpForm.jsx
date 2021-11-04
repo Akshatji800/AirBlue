@@ -55,6 +55,11 @@ const SignUpForm = (props) => {
             miles
           }
         }
+        redeemedStatus(input: {user: $username}) {
+          redeemItem {
+            id
+          }
+        }
     }
     `
 

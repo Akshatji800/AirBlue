@@ -12,25 +12,13 @@ const CouponList = (props) => {
     var user = path.substring(n+1);
     console.log(props);
 
-
-    const LOAD_USER_COUPONS = gql`
-    query couponInfo(
-        $id: Int!
-        ){
-          couponInfo(
-            id: $id
-        ) {
-            used
-        }
-    }`
-
     const CHANGE_COUPON_STATUS = gql`
     mutation useCoupon(
-        $id: Int!
+        $couponCode: String!
         ){
           useCoupon(
             input:{
-              id: $id
+              couponCode: $couponCode
             }
         ) {
           couponChange {
@@ -55,15 +43,12 @@ const CouponList = (props) => {
           miles
         }
         }
+        changeRedeemedStatus(input: {user: $user}) {
+          redeemItem {
+            id
+          }
+        }
     }`
-
-
-    const { data, loading, error } = useQuery(LOAD_USER_COUPONS , {
-        variables: {id: props.id}
-      });
-      if(data!=undefined){
-        console.log(data.couponInfo[0]['used']);
-      }
     
 
       const [changeCoupon, { cdata, cloading,cerror }] = useMutation(CHANGE_COUPON_STATUS);
@@ -74,7 +59,7 @@ const CouponList = (props) => {
 
       changeCoupon({
         variables: {
-          id: props.id,
+          couponCode: props.id,
         },
       });
 
@@ -85,10 +70,11 @@ const CouponList = (props) => {
         },
       });
 
-      
-      window.location.reload();
+      window.location.reload(false);
+      window.location.reload(true);
     }
       
+    console.log(props.status);
 
     return <React.Fragment>
         <div class="containers">
@@ -101,11 +87,12 @@ const CouponList = (props) => {
                 <div class="offer font-weight-bold"><i> {props.value} AirMiles</i></div>
                 <div class="h4">on</div>
                 <div class="h4">Redeem</div>
-                <div class="pt-5 coupon"> <i>coupon valid for One Month</i> </div>{
-                   (data!=undefined && !data.couponInfo[0]['used']) ? 
-                <div class="btns rounded mt-3" onClick={SubmitHandler}>REDEEM NOW</div>
+                <div class="pt-5 coupon"> <i>coupon valid for One Month</i> </div>
+                {
+                   (props.status) ? 
+                   <div class="btns rounded mt-3">ALREADY USED</div> 
                 :
-                <div class="btns rounded mt-3">ALREADY USED</div> 
+                <div class="btns rounded mt-3" onClick={SubmitHandler}>REDEEM NOW</div>
                 }
             
             </div>
