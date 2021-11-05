@@ -2,8 +2,12 @@ import React from "react";
 import { ReactComponent as IconSearch } from "bootstrap-icons/icons/search.svg";
 
 const Search = () => {
+
+  const SubmitHandler = (e)=> {
+    e.preventDefault();
+}
   return (
-    <form action="#" className="search">
+    <form onSubmit={SubmitHandler} className="search">
       <div className="input-group">
         <input
           id="search"
@@ -11,7 +15,6 @@ const Search = () => {
           type="text"
           className="form-control"
           placeholder="Search"
-          required
         />
         <label className="visually-hidden" htmlFor="search"></label>
         <button

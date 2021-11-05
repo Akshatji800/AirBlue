@@ -58,7 +58,7 @@ function App() {
           <>
             <Header />
             <TopMenu />
-            <Route exact path="/home/:user" render={(props) => <HomeView {...props }/>}/>
+            <Route exact path="/home" render={(props) => <HomeView {...props }/>}/>
             <Route
               exact
               path="/account/forgotpassword"
@@ -72,12 +72,12 @@ function App() {
               path="/account/notification"
               component={NotificationView}
             />
-            <Route exact path="/category/:user" render={(props) => <ProductListView {...props }/>}/>
+            <Route exact path="/category" render={(props) => <ProductListView {...props }/>}/>
             <Route exact path="/product/detail" component={ProductDetailView} />
             <Route exact path="/star/zone" component={StarZoneView} />
-            <Route exact path="/redeem/coupons/:user" render={(props) => <CouponsView {...props }/>}/>
-            <Route exact path="/cart/:user" render={(props) => <CartView {...props }/>}/>
-            <Route exact path="/checkout/:user?:total" render={(props) => <CheckoutView {...props }/>}/>
+            <Route exact path="/redeem/coupons" render={(props) => <CouponsView {...props }/>}/>
+            <Route exact path="/cart" render={(props) => <CartView {...props }/>}/>
+            <Route exact path="/checkout?:total" render={(props) => <CheckoutView {...props }/>}/>
             <Route exact path="/documentation" component={DocumentationView} />
             <Route exact path="/contact-us" component={ContactUsView} />
             <Route exact path="/support" component={SupportView} />

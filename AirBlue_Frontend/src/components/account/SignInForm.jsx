@@ -1,12 +1,13 @@
 import React , {useState} from "react";
 import { Field, reduxForm } from "redux-form";
 import { compose } from "redux";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { Redirect } from "react-router-dom/cjs/react-router-dom.min";
 import {
   useMutation,
   gql
 } from "@apollo/client";
+import { saveTokens } from "../../tokens";
 
 import renderFormGroupField from "../../helpers/renderFormGroupField";
 import {
@@ -27,7 +28,9 @@ import { ReactComponent as IconPhoneFill } from "bootstrap-icons/icons/envelope-
 import { ReactComponent as IconShieldLockFill } from "bootstrap-icons/icons/shield-lock-fill.svg";
 
 const SignInForm = (props) => {
+  let history = useHistory();
   const { handleSubmit, submitting, onSubmit, submitFailed } = props;
+  const [toggle, setToggle] = useState(false);
   const [status, setStatus] = useState(false);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -48,100 +51,105 @@ const SignInForm = (props) => {
         }
     }
     `
-  const [getUser, { data, loading, error }] = useMutation(LOAD_USER_lOGIN);
-  const SubmitHandler = (e)=> {e.preventDefault(); getUser({
-      variables: {
-        username: username,
-        password: password,
-      },
-    });
-  if(data!=undefined){if(data.tokenAuth.success){
-    setStatus(true);
-  }else{
-    setInvalid(true); 
-  };}}
-  
-  return (
-    <form
-      onSubmit={SubmitHandler}
-      className={`needs-validation ${submitFailed ? "was-validated" : ""}`}
-      noValidate
-    >
-      {status? (
-        <Redirect
-        to={{
-        pathname: `/home/${username}`,
-        state: { authenticated: true }
-      }}
-    />):(
-        <div>
-        {invalid ? "Invalid username/password" : ""}
-          <Field
-        name="mobileNo"
-        type="text"
-        label="Username"
-        component={renderFormGroupField}
-        placeholder="Enter your registered username"
-        icon={IconPhoneFill}
-        validate={[required, maxLengthMobileNo, minLengthMobileNo, digit]}
-        required={true}
-        max="999999999999999"
-        min="9999"
-        className="mb-3"
-        onChange = {(e)=>{setUsername(e.target.value)}}
-      />
-      <Field
-        name="password"
-        type="password"
-        label="Your password"
-        component={renderFormGroupField}
-        placeholder="******"
-        icon={IconShieldLockFill}
-        validate={[required, maxLength20, minLength8]}
-        required={true}
-        maxLength="20"
-        minLength="8"
-        className="mb-3"
-        onChange = {(e)=>{setPassword(e.target.value)}}
-      />
-      <button
-        type="submit"
-        className="btn btn-primary btn-block mb-3"
-        disabled={submitting}
+    const [getUser, { data, loading, error }] = useMutation(LOAD_USER_lOGIN);
+    const SubmitHandler = (e)=> {e.preventDefault();
+      getUser({
+        variables: {
+          username: username,
+          password: password,
+        },
+      });
+    
+    if(data != undefined && !data.tokenAuth.success){
+      setInvalid(true);
+    }
+    setToggle(true);
+  };
+    
+    
+    if(toggle && data != undefined && data.tokenAuth.success){
+      if(data.tokenAuth.success){
+        saveTokens(data.tokenAuth.token);
+        history.push(
+          {
+            pathname: `/home`,
+            state: { authenticated: true }
+          }
+        )
+      }
+    }
+    
+    return (
+      <form
+        onSubmit={SubmitHandler}
+        className={`needs-validation ${submitFailed ? "was-validated" : ""}`}
+        noValidate
       >
-        Log In
-      </button>
-      <Link className="float-left" to="/account/signup" title="Sign Up">
-        Create your account
-      </Link>
-      <div className="clearfix"></div>
-      <hr></hr>
-      <div className="row">
-        <div className="col- text-center">
-          <p className="text-muted small">Or you can join with</p>
+          <div>
+          {invalid ? "Invalid username/password" : ""}
+            <Field
+          name="mobileNo"
+          type="text"
+          label="Username"
+          component={renderFormGroupField}
+          placeholder="Enter your registered username"
+          icon={IconPhoneFill}
+          validate={[required, maxLengthMobileNo, minLengthMobileNo, digit]}
+          required={true}
+          max="999999999999999"
+          min="9999"
+          className="mb-3"
+          onChange = {(e)=>{setUsername(e.target.value)}}
+        />
+        <Field
+          name="password"
+          type="password"
+          label="Your password"
+          component={renderFormGroupField}
+          placeholder="******"
+          icon={IconShieldLockFill}
+          validate={[required, maxLength20, minLength8]}
+          required={true}
+          maxLength="20"
+          minLength="8"
+          className="mb-3"
+          onChange = {(e)=>{setPassword(e.target.value)}}
+        />
+        <button
+          type="submit"
+          className="btn btn-primary btn-block mb-3"
+          disabled={submitting}
+        >
+          Log In
+        </button>
+        <Link className="float-left" to="/account/signup" title="Sign Up">
+          Create your account
+        </Link>
+        <div className="clearfix"></div>
+        <hr></hr>
+        <div className="row">
+          <div className="col- text-center">
+            <p className="text-muted small">Or you can join with</p>
+          </div>
+          <div className="col- text-center">
+            <Link to="/" className="btn text-white bg-twitter mr-3">
+              <FontAwesomeIcon icon={faTwitter} />
+            </Link>
+            <Link to="/" className="btn text-white mr-3 bg-facebook">
+              <FontAwesomeIcon icon={faFacebookF} className="mx-1" />
+            </Link>
+            <Link to="/" className="btn text-white mr-3 bg-google">
+              <FontAwesomeIcon icon={faGoogle} className="mx-1" />
+            </Link>
+          </div>
         </div>
-        <div className="col- text-center">
-          <Link to="/" className="btn text-white bg-twitter mr-3">
-            <FontAwesomeIcon icon={faTwitter} />
-          </Link>
-          <Link to="/" className="btn text-white mr-3 bg-facebook">
-            <FontAwesomeIcon icon={faFacebookF} className="mx-1" />
-          </Link>
-          <Link to="/" className="btn text-white mr-3 bg-google">
-            <FontAwesomeIcon icon={faGoogle} className="mx-1" />
-          </Link>
-        </div>
-      </div>
-        </div>
-      )}
-      
-      
-    </form>
-  );
-};
-
-export default compose(
-  reduxForm({
-    form: "signin",
-  })
-)(SignInForm);
+          </div>
+      </form>
+    );
+  };
+  
+  export default compose(
+    reduxForm({
+      form: "signin",
+    })
+  )(SignInForm);

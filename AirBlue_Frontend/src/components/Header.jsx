@@ -16,11 +16,9 @@ import { ReactComponent as IconBellFill } from "bootstrap-icons/icons/bell-fill.
 import { ReactComponent as IconInfoCircleFill } from "bootstrap-icons/icons/info-circle-fill.svg";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser } from "@fortawesome/free-solid-svg-icons";
+import { getTokens } from "../tokens";
 
 const Header = () => {
-  var path = window.location.pathname
-  var n = path.lastIndexOf("/");
-  var user = path.substring(n+1);
   const LOAD_USER_MILES = gql`
     query allMiles(
         $user: String!
@@ -34,7 +32,7 @@ const Header = () => {
     `
 
   const { data, loading, error } = useQuery(LOAD_USER_MILES, {
-    variables: {user: user}
+    variables: {user: getTokens()}
   });
 
 
@@ -45,7 +43,7 @@ const Header = () => {
           <div className="row g-3">
             <div className="col-md-3 text-center">
               <Link className="navbar-brand" to={{
-        pathname: `/home/${user}`,
+        pathname: `/home`,
         state: { authenticated: true }
       }}>
                 <img
@@ -60,7 +58,7 @@ const Header = () => {
             <div className="col-md-4">
               <div className="position-relative d-inline mr-3">
                 <Link to={{
-        pathname: `/cart/${user}`,
+        pathname: `/cart`,
         state: { authenticated: true }
       }} className="btn btn-primary">
                   <IconCart3 className="i-va" />
@@ -83,7 +81,7 @@ const Header = () => {
                     </Link>
                   </li>
                   <li>
-                    <Link className="dropdown-item" to={{pathname: `/redeem/coupons/${user}`, state: { authenticated: true } }}>
+                    <Link className="dropdown-item" to={{pathname: `/redeem/coupons`, state: { authenticated: true } }}>
                       <IconCoupons className="text-warning" /> Redeem Coupon
                     </Link>
                   </li>

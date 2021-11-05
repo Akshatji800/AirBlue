@@ -67,10 +67,15 @@ const SignUpForm = (props) => {
   const [password, setPassword] = useState("")
   const [confirmPassword, setConfirm] = useState("")
   const [email, setEmail] = useState("")
+  const [validate, setValidate] = useState(false);
 
   const [createUser, { data, loading, error }] = useMutation(CREATE_USER_lOGIN);
   const SubmitHandler = (e)=> {
-    if(password == confirmPassword){
+    e.preventDefault();
+    if(password == "" && username == "" && email == "" && confirmPassword == ""){
+      setValidate(true)
+    }
+    else if(password == confirmPassword){
       createUser({
       variables: {
         email: email,
@@ -144,6 +149,7 @@ const SignUpForm = (props) => {
         className="mb-3"
         onChange = {(e)=>{setConfirm(e.target.value)}}
       />
+      {(validate)? <>Enter every fields</>:<></>}
       <button
         type="submit"
         className="btn btn-primary btn-block mb-3"

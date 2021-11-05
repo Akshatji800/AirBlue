@@ -1,6 +1,7 @@
 # cookbook/schema.py
 from django.db import models
 import graphene
+import jwt
 from django.contrib.auth import get_user_model
 from graphene_django import DjangoObjectType
 from graphene.types.generic import GenericScalar
@@ -152,6 +153,7 @@ class MilesInput(graphene.InputObjectType):
 
 class CouponInput(graphene.InputObjectType):
     couponCode = graphene.String()
+    user=graphene.String()
 
 class OrderInput(graphene.InputObjectType):
     user=graphene.String()
@@ -220,7 +222,8 @@ class AddtoCart(graphene.Mutation):
     @staticmethod
     def mutate(root, info, input=None):
         item =  Items.objects.get(name=input.name)
-        userInstance = get_user_model().objects.get(username = input.user)
+        token = jwt.decode(input.user,verify=False)
+        userInstance = get_user_model().objects.get(username = token['username'])
         if item:
             item.user.add(userInstance.id)
             item.save()
@@ -234,8 +237,9 @@ class RemoveFromCart(graphene.Mutation):
     cart = graphene.Field(ItemsType)
     @staticmethod
     def mutate(root, info, input=None):
+        token = jwt.decode(input.user,verify=False)
         item =  Items.objects.get(name=input.name)
-        userInstance = get_user_model().objects.get(username = input.user)
+        userInstance = get_user_model().objects.get(username = token['username'])
         if item:
             item.user.remove(userInstance.id)
             item.save()
@@ -249,9 +253,9 @@ class ClearCart(graphene.Mutation):
     cart = graphene.Field(ItemsType)
     @staticmethod
     def mutate(root, info, input=None):
-
-        item =  Items.objects.filter(user__username=input.user)
-        userInstance = get_user_model().objects.get(username = input.user)
+        token = jwt.decode(input.user,verify=False)
+        item =  Items.objects.filter(user__username=token['username'])
+        userInstance = get_user_model().objects.get(username = token['username'])
         for i in item:           
             if i:
                 i.user.remove(userInstance.id)
@@ -286,7 +290,8 @@ class Query(graphene.ObjectType):
 
     def resolve_show_redeem_status(self, info, user):
         try:
-            return RedeemedUser.objects.filter(user__username=user).all()
+            token = jwt.decode(user,verify=False)
+            return RedeemedUser.objects.filter(user__username=token['username']).all()
         except:
             return None
 
@@ -298,7 +303,8 @@ class Query(graphene.ObjectType):
     
     def resolve_cards(self, info, user):
         try:
-            return Card.objects.filter(user__username=user).all()
+            token = jwt.decode(user,verify=False)
+            return Card.objects.filter(user__username=token['username']).all()
         except:
             return None
 
@@ -312,14 +318,17 @@ class Query(graphene.ObjectType):
         return get_user_model().objects.all()
 
     def resolve_all_miles(root, info, user):
+        
         try:
-            return Miles.objects.filter(user__username=user).all()
+            token = jwt.decode(user,verify=False)
+            return Miles.objects.filter(user__username=token['username']).all()
         except:
             return None
 
     def resolve_cart_items(root, info, user):
         try:
-            return Items.objects.filter(user__username=user).all()  
+            token = jwt.decode(user,verify=False)
+            return Items.objects.filter(user__username=token['username']).all()
         except:
             return None
     def resolve_all_items(root, info):
@@ -394,7 +403,8 @@ class changeRedeemStatus(graphene.Mutation):
 
     @staticmethod
     def mutate(root, info, input=None):
-        userInstance = get_user_model().objects.get(username = input.user)
+        token = jwt.decode(input.user,verify=False)
+        userInstance = get_user_model().objects.get(username = token['username'])
         redeem_item  = RedeemedUser.objects.get(user=userInstance)
         redeem_item.redeemed = True
         redeem_item.save()
@@ -408,7 +418,8 @@ class CreateCard(graphene.Mutation):
 
     @staticmethod
     def mutate(root, info, input=None):
-        userInstance = get_user_model().objects.get(username = input.user)
+        token = jwt.decode(input.user,verify=False)
+        userInstance = get_user_model().objects.get(username = token['username'])
         card = Card.objects.create(
             user_id = userInstance.id,
             name = input.name,
@@ -428,7 +439,8 @@ class UpdateMiles(graphene.Mutation):
 
     @staticmethod
     def mutate(root, info, input=None):
-        miles_details = Miles.objects.get(user__username = input.user)
+        token = jwt.decode(input.user,verify=False)
+        miles_details = Miles.objects.get(user__username = token['username'])
         miles_details.miles = miles_details.miles - input.miles
         miles_details.save()
         return UpdateMiles(miles_details=miles_details)
@@ -441,7 +453,8 @@ class IncreaseMiles(graphene.Mutation):
 
     @staticmethod
     def mutate(root, info, input=None):
-        miles_details = Miles.objects.get(user__username = input.user)
+        token = jwt.decode(input.user,verify=False)
+        miles_details = Miles.objects.get(user__username = token['username'])
         miles_details.miles = miles_details.miles + input.miles
         miles_details.save()
         return IncreaseMiles(miles_details=miles_details)
@@ -470,7 +483,8 @@ class CreateOrder(graphene.Mutation):
 
     @staticmethod
     def mutate(root, info, input=None):
-        userInstance = get_user_model().objects.get(username = input.user)
+        token = jwt.decode(input.user,verify=False)
+        userInstance = get_user_model().objects.get(username = token['username'])
         length_orders = len(UserOrder.objects.all())
         order_items = UserOrder.objects.create(total=input.value)
         items = input.item.split(',')
@@ -488,6 +502,14 @@ class UseCoupon(graphene.Mutation):
     coupon_change = graphene.Field(MilesType)
 
     def mutate(root, info, input=None):
+        token = jwt.decode(input.user,verify=False)
+        userInstance = get_user_model().objects.get(username = token['username'])
+        redeem_item  = RedeemedUser.objects.get(user=userInstance)
+        redeem_item.redeemed = True
+        redeem_item.save()
+        miles_details = Miles.objects.get(user__username = token['username'])
+        miles_details.miles = miles_details.miles + 1000
+        miles_details.save()
         couponInstance = CommonCoupon.objects.get(code=input.couponCode)
         couponInstance.used = True
         couponInstance.save()
@@ -515,3 +537,6 @@ schema = graphene.Schema(
     query=Query,
     mutation=Mutation,
 )
+
+deocded = jwt.decode("eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6ImFpcmJsdWUiLCJleHAiOjE2MzYxNDIxNjgsIm9yaWdJYXQiOjE2MzYxNDE4Njh9.7cIj7Zk_Lws1AE-Hiq6NPTyvAV-xpgU2kDlU520VTTA", verify=False)
+print(deocded['username'])

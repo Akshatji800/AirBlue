@@ -10,6 +10,7 @@ import { ReactComponent as IconDisplay } from "bootstrap-icons/icons/display.svg
 import { ReactComponent as IconHdd } from "bootstrap-icons/icons/hdd.svg";
 import { ReactComponent as IconUpcScan } from "bootstrap-icons/icons/upc-scan.svg";
 import { ReactComponent as IconTools } from "bootstrap-icons/icons/tools.svg";
+import { getTokens } from "../tokens";
 
 const Support = lazy(() => import("../components/Support"));
 const Banner = lazy(() => import("../components/carousel/Banner"));
@@ -22,11 +23,6 @@ const CardDealsOfTheDay = lazy(() =>
 );
 
 class HomeView extends Component {
-  componentDidMount(props){
-    if(this.props.location.state == undefined){
-     console.log(this.props.location.state.authenticated) 
-    }
-  }
   components = {
     IconLaptop: IconLaptop,
     IconHeadset: IconHeadset,
@@ -39,9 +35,6 @@ class HomeView extends Component {
   };
 
   render() {
-  var path = window.location.pathname
-  var n = path.lastIndexOf("/");
-  var user = path.substring(n+1);
     const iconProducts = data.iconProducts;
     const rows = [...Array(Math.ceil(iconProducts.length / 4))];
     // chunk the products into the array of rows
@@ -60,7 +53,7 @@ class HomeView extends Component {
                   title={product.title}
                   text={product.text}
                   tips={product.tips}
-                  to={product.to}
+                  to={`/category`}
                 >
                   <ProductImage className={product.cssClass} />
                 </CardIcon>
@@ -83,7 +76,7 @@ class HomeView extends Component {
               <Support />
             </div>
             <div className="col-md-3">
-              <CardImage src="../../images/banner/Watches.webp" to="promo" />
+              <CardImage src="../../images/banner/Watches.webp" to="/category" />
             </div>
           </div>
         </div>
@@ -110,7 +103,7 @@ class HomeView extends Component {
           <div className="row">
             <div className="col-md-3">
               <Link to={{
-        pathname: `/category/${user}`,
+        pathname: `/category}`,
         state: { authenticated: true }
       }} className="text-decoration-none">
                 <img
@@ -123,7 +116,7 @@ class HomeView extends Component {
             </div>
             <div className="col-md-3">
               <Link to={{
-        pathname: `/category/${user}`,
+        pathname: `/category`,
         state: { authenticated: true }
       }}  className="text-decoration-none">
                 <img
@@ -136,7 +129,7 @@ class HomeView extends Component {
             </div>
             <div className="col-md-3">
               <Link to={{
-        pathname: `/category/${user}`,
+        pathname: `/category`,
         state: { authenticated: true }
       }}  className="text-decoration-none">
                 <img
@@ -149,7 +142,7 @@ class HomeView extends Component {
             </div>
             <div className="col-md-3">
               <Link to={{
-        pathname: `/category/${user}`,
+        pathname: `/category`,
         state: { authenticated: true }
       }}  className="text-decoration-none">
                 <img

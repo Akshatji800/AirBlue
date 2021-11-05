@@ -6,6 +6,7 @@ import {
   gql
 } from "@apollo/client";
 import { data } from "../../data";
+import { getTokens } from "../../tokens";
 
 const CouponsView = (props) => {
 
@@ -26,15 +27,14 @@ const CouponsView = (props) => {
     }
   }
   `
- // {__typename: 'CouponStatusType', redeemed: false} showRedeemStatus
   
   const { data, loading, error } = useQuery(LOAD_USER_COUPONS, {
-    variables: {user: user}
+    variables: {user: getTokens()}
   });
   
     return (
       <React.Fragment>
-        {(data!=undefined && data.couponInfo.length != 0)? <CouponList value={1000} id={data.couponInfo[0]['code']} status={data.showRedeemStatus[0].redeemed}/>: <></>}
+        {(data!=undefined && data.couponInfo.length != 0)? <CouponList id={data.couponInfo[0]['code']} status={data.showRedeemStatus[0].redeemed}/>: <></>}
       </React.Fragment>
     );
 }

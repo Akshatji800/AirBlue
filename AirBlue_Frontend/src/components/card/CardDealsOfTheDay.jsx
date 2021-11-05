@@ -36,7 +36,7 @@ const CardDealsOfTheDay = (props) => {
           />
           <span className="float-right">
             <Link to={{
-        pathname: `/category/${user}`,
+        pathname: `/category`,
         state: { authenticated: true }
       }} className="btn btn-sm btn-outline-primary">
               View All

@@ -44,7 +44,6 @@ const ProductListView = props => {
     }
   `
   const [profileState, setProfileState] = useState(props);
-  console.log(profileState.location.state.authenticated)
   const { data, loading, error } = useQuery(LOAD_ITEMS);
   console.log(data);
 
@@ -66,13 +65,6 @@ const ProductListView = props => {
         <div className="container-fluid mb-3">
           <div className="row">
             <div className="col-md-3">
-              <FilterCategory />
-              <FilterPrice />
-              <FilterSize />
-              <FilterStar />
-              <FilterColor />
-              <FilterClear />
-              <FilterTag />
               <CardServices />
             </div>
             <div className="col-md-9">

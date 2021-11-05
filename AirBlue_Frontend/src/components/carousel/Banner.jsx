@@ -6,7 +6,7 @@ var path = window.location.pathname
 const Item = ({ item, index }) => (
   <div className={`carousel-item ${index === 0 ? "active" : ""}`}>
     <Link to={{
-        pathname: `/category/${user}`,
+        pathname: `/category`,
         state: { authenticated: true }
       }}>
       <img src={item.img} className="img-fluid" alt={item.title} />

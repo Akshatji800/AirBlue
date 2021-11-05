@@ -10,7 +10,7 @@ const TopMenu = () => {
       <nav className="navbar navbar-expand-lg navbar-dark bg-dark p-0">
         <div className="container-fluid">
           <Link className="navbar-brand" to={{
-        pathname: `/home/${user}`,
+        pathname: `/home`,
         state: { authenticated: true }
       }}>
             AirBlue
@@ -30,42 +30,13 @@ const TopMenu = () => {
             <ul className="navbar-nav">
               <li className="nav-item">
                                 <Link to={{
-        pathname: `/category/${user}`,
+        pathname: `/category`,
         state: { authenticated: true }
       }} className="nav-link">
                   Fashion
                 </Link>
               </li>
-              <li className="nav-item">
-                <Link className="nav-link" to="/category">
-                  Supermarket
-                </Link>
-              </li>
-              <li className="nav-item">
-                <Link className="nav-link" to="/category">
-                  Electronics
-                </Link>
-              </li>
-              <li className="nav-item">
-                <Link className="nav-link" to="/category">
-                  Furniture
-                </Link>
-              </li>
-              <li className="nav-item">
-                <Link className="nav-link" to="/category">
-                  Garden & Outdoors
-                </Link>
-              </li>
-              <li className="nav-item">
-                <Link className="nav-link" to="/category">
-                  Jewellery
-                </Link>
-              </li>
-              <li className="nav-item">
-                <Link className="nav-link" to="/documentation">
-                  Documentation
-                </Link>
-              </li>
+              
             </ul>
           </div>
         </div>

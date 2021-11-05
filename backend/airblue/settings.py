@@ -146,6 +146,11 @@ GRAPHENE = {
     ],
 }
 
+AUTHENTICATION_BACKENDS = [
+    'graphql_auth.backends.JSONWebTokenBackend',
+    'django.contrib.auth.backends.ModelBackend',
+]
+
 # Internationalization
 # https://docs.djangoproject.com/en/3.2/topics/i18n/
 

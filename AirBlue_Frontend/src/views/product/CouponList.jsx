@@ -5,6 +5,7 @@ import {
     gql,
     useMutation
   } from "@apollo/client";
+  import { getTokens } from "../../tokens";
 
 const CouponList = (props) => {
     var path = window.location.pathname
@@ -15,10 +16,12 @@ const CouponList = (props) => {
     const CHANGE_COUPON_STATUS = gql`
     mutation useCoupon(
         $couponCode: String!
+        $user: String!
         ){
           useCoupon(
             input:{
               couponCode: $couponCode
+              user: $user
             }
         ) {
           couponChange {
@@ -28,49 +31,19 @@ const CouponList = (props) => {
     }
     `
 
-    const INCREASE_USER_MILES = gql`
-    mutation increseMiles(
-        $miles: Int!
-        $user: String!
-        ){
-          increseMiles(
-            input: {
-              miles: $miles
-            user: $user
-            }
-        ) {
-          milesDetails {
-          miles
-        }
-        }
-        changeRedeemedStatus(input: {user: $user}) {
-          redeemItem {
-            id
-          }
-        }
-    }`
     
 
       const [changeCoupon, { cdata, cloading,cerror }] = useMutation(CHANGE_COUPON_STATUS);
-
-      const [increseMiles, { idata, iloading,ierror }] = useMutation(INCREASE_USER_MILES);
 
       const SubmitHandler = (e)=> {e.preventDefault();
 
       changeCoupon({
         variables: {
           couponCode: props.id,
+          user: getTokens()
+
         },
       });
-
-      increseMiles({
-        variables: {
-          miles: props.value,
-          user: user,
-        },
-      });
-
-      
       window.location.reload();
     }
       

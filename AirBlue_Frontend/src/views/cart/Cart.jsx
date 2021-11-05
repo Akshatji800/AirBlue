@@ -12,16 +12,13 @@ import {
   gql
 } from "@apollo/client";
 import { faMinus, faPlus } from "@fortawesome/free-solid-svg-icons";
+import { getTokens } from "../../tokens";
 const CouponApplyForm = lazy(() =>
   import("../../components/others/CouponApplyForm")
 );
 
 const  CartView = props => {
-  var path = window.location.pathname
-  var n = path.lastIndexOf("/");
-  var user = path.substring(n+1);
     const [profileState, setProfileState] = useState(props);
-  console.log(profileState.location.state.authenticated)
   const LOAD_USER_CART = gql`
     query cartItems(
         $user: String!
@@ -63,7 +60,7 @@ const  CartView = props => {
     }
     `
 
-  const {data, loading, error} = useQuery(LOAD_USER_CART, {variables:{user: user}})
+  const {data, loading, error} = useQuery(LOAD_USER_CART, {variables:{user: getTokens()}})
   const [removeCart, { rdata, rloading, rerror }] = useMutation(REMOVE_CART);
   const products = [];
   var cartTotal = 0;
@@ -83,7 +80,7 @@ const  CartView = props => {
   const remove = (name) => {
     removeCart({variables: {
         name: name,
-        user: user
+        user: getTokens(),
       }})
       window.location.reload(false);
   }
@@ -170,7 +167,7 @@ const  CartView = props => {
               <div className="card-footer">
                 {(data!=undefined)? ((data['allMiles'][0]['miles'] >= cartTotal) ? (
                   <Link to={{
-        pathname: `/checkout/${user}?${cartTotal}`,
+        pathname: `/checkout?${cartTotal}`,
         state: { authenticated: true, items: products}
       }} className="btn btn-primary float-right">
                   Make Purchase <IconChevronRight className="i-va" />
@@ -178,7 +175,7 @@ const  CartView = props => {
                 ) : (<p className="btn btn-primary float-right">Insufficient funds</p>)) : ""}
                 
                 <Link to={{
-        pathname: `/category/${user}`,
+        pathname: `/category`,
         state: { authenticated: true }
       }} className="btn btn-secondary">
                   <IconChevronLeft className="i-va" /> Continue shopping

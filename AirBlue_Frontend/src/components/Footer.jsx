@@ -26,37 +26,37 @@ const Footer = () => {
               Get connected with us on social networks!
             </div>
             <div className="col-md-3 py-3 text-center text-white">
-              <Link to="/" title="Apple">
+              <>
                 <FontAwesomeIcon icon={faApple} className="text-light mr-3" />
-              </Link>
-              <Link to="/" title="Windows">
+              </>
+              <>
                 <FontAwesomeIcon icon={faWindows} className="text-light mr-3" />
-              </Link>
-              <Link to="/" title="Android">
+              </>
+              <>
                 <FontAwesomeIcon icon={faAndroid} className="text-light mr-3" />
-              </Link>
+              </>
               |
-              <Link to="/" title="Twitter">
+              <>
                 <FontAwesomeIcon
                   icon={faTwitter}
                   className="text-light ml-3 mr-3"
                 />
-              </Link>
-              <Link to="/" title="Facebook">
+              </>
+              <>
                 <FontAwesomeIcon
                   icon={faFacebookF}
                   className="text-light mr-3"
                 />
-              </Link>
-              <Link to="/" title="Instagram">
+              </>
+              <>
                 <FontAwesomeIcon
                   icon={faInstagram}
                   className="text-light mr-3"
                 />
-              </Link>
-              <Link to="/" title="Youtube">
+              </>
+              <>
                 <FontAwesomeIcon icon={faYoutube} className="text-light mr-3" />
-              </Link>
+              </>
             </div>
           </div>
         </div>
@@ -74,44 +74,29 @@ const Footer = () => {
               <hr />
               <ul className="list-group list-group-flush">
                 <li className="list-group-item bg-dark text-white border-light">
-                  <Link
-                    to="/"
-                    className="text-decoration-none text-white stretched-link"
-                  >
+                  <>
                     Electronics
-                  </Link>
+                  </>
                 </li>
                 <li className="list-group-item bg-dark text-white border-light">
-                  <Link
-                    to="/"
-                    className="text-decoration-none text-white stretched-link"
-                  >
+                  <>
                     Mobiles
-                  </Link>
+                  </>
                 </li>
                 <li className="list-group-item bg-dark text-white border-light">
-                  <Link
-                    to="/"
-                    className="text-decoration-none text-white stretched-link"
-                  >
+                  <>
                     Car & bike
-                  </Link>
+                  </>
                 </li>
                 <li className="list-group-item bg-dark text-white border-light">
-                  <Link
-                    to="/"
-                    className="text-decoration-none text-white stretched-link"
-                  >
+                  <>
                     Super Market
-                  </Link>
+                  </>
                 </li>
                 <li className="list-group-item bg-dark text-white border-light">
-                  <Link
-                    to="/"
-                    className="text-decoration-none text-white stretched-link"
-                  >
+                  <>
                     Travel Cards
-                  </Link>
+                  </>
                 </li>
               </ul>
             </div>
@@ -120,44 +105,29 @@ const Footer = () => {
               <hr />
               <ul className="list-group list-group-flush">
                 <li className="list-group-item bg-dark text-white border-light">
-                  <Link
-                    to="/"
-                    className="text-decoration-none text-white stretched-link"
-                  >
+                  <>
                     Return Policy
-                  </Link>
+                  </>
                 </li>
                 <li className="list-group-item bg-dark text-white border-light">
-                  <Link
-                    to="/"
-                    className="text-decoration-none text-white stretched-link"
-                  >
+                  <>
                     Terms Of Use
-                  </Link>
+                  </>
                 </li>
                 <li className="list-group-item bg-dark text-white border-light">
-                  <Link
-                    to="/"
-                    className="text-decoration-none text-white stretched-link"
-                  >
+                  <>
                     Security
-                  </Link>
+                  </>
                 </li>
                 <li className="list-group-item bg-dark text-white border-light">
-                  <Link
-                    to="/"
-                    className="text-decoration-none text-white stretched-link"
-                  >
+                  <>
                     Privacy
-                  </Link>
+                  </>
                 </li>
                 <li className="list-group-item bg-dark text-white border-light">
-                  <Link
-                    to="/"
-                    className="text-decoration-none text-white stretched-link"
-                  >
+                  <>
                     EPR Compliance
-                  </Link>
+                  </>
                 </li>
               </ul>
             </div>
@@ -184,19 +154,19 @@ const Footer = () => {
         <div className="container-fluid bg-secondary text-white text-center">
           <div className="row">
             <div className="col-md-2 py-2">
-              <Link to="/" className="text-white text-decoration-none">
+              <>
                 <IconBriefcase className="text-warning" /> Partner with us
-              </Link>
+              </>
             </div>
             <div className="col-md-2 py-2">
-              <Link to="/" className="text-white text-decoration-none">
+              <>
                 <IconBadgeAd className="text-info" /> Advertise
-              </Link>
+              </>
             </div>
             <div className="col-md-2 py-2">
-              <Link to="/" className="text-white text-decoration-none">
+              <>
                 <IconGift className="text-dark" /> Gift
-              </Link>
+              </>
             </div>
             <div className="col-md-3 py-2">
               © 2020-{new Date().getFullYear()} <a href = "https://amfoss.in/" target = "_blank">amFOSS</a>

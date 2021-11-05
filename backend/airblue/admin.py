@@ -124,7 +124,6 @@ class MilesAdmin(admin.ModelAdmin):
  pass
 
 admin.site.register(Items)
-admin.site.register(Coupon)
 admin.site.register(UserOrder)
 admin.site.register(CommonCoupon)
 admin.site.register(Card)

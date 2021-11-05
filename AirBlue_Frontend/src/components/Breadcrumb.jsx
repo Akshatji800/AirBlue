@@ -5,12 +5,12 @@ const Breadcrumb = () => {
     <nav aria-label="breadcrumb">
       <ol className="breadcrumb rounded-0">
         <li className="breadcrumb-item">
-          <Link to="/" title="Home">
+          <Link to="/home" title="Home">
             Home
           </Link>
         </li>
         <li className="breadcrumb-item">
-          <Link to="/" title="Men">
+          <Link to="/category" title="Men">
             Men
           </Link>
         </li>

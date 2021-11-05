@@ -5,6 +5,7 @@ import { ReactComponent as IconReceipt } from "bootstrap-icons/icons/receipt.svg
 import { ReactComponent as IconCreditCard2Front } from "bootstrap-icons/icons/credit-card-2-front.svg";
 import { ReactComponent as IconCart3 } from "bootstrap-icons/icons/cart3.svg";
 import { Link } from "react-router-dom";
+import { getTokens } from "../../tokens";
 import {
   useMutation,
   gql,
@@ -123,22 +124,21 @@ const CheckoutView = props =>{
     }
     `
     const [profileState, setProfileState] = useState(props);
-    console.log(profileState.location.state.authenticated)
     var itemnames=profileState.location.state.items.join(',');
     const [createCard, { adddata, addloading, adderror }] = useMutation(CREATE_USER_CARD);
     const [editMiles, { edata, eloading, eerror }] = useMutation(EDIT_USER_MILES);
     const { data, loading, error } = useQuery(GET_CARD, {
-      variables: {user: user}
+      variables: {user: getTokens()}
   });
 
     const [clearCart, { cdata, cloading, cerror }] = useMutation(CLEAR_USER_CART);
     const [sendData, { sdata, sloading, serror }] = useMutation(SEND_USER_ORDER);
 
     const edit = () => {
-      if(data!=undefined && data.cards.length == 0){
+      if(data!=undefined && data.cards == null){
         createCard({
           variables:{
-            user: user,
+            user: getTokens(),
             name: name,
             number: number,
             month: month,
@@ -150,17 +150,17 @@ const CheckoutView = props =>{
 
       editMiles({variables: {
         miles: total,
-        user: user
+        user: getTokens()
       }});
 
       sendData({variables: {
         item: itemnames,
-        user: user,
+        user: getTokens(),
         value: total, 
       }});
 
       clearCart({variables: {
-        user: user
+        user: getTokens()
       }});
       window.location.reload(false);
     }
@@ -296,7 +296,7 @@ const CheckoutView = props =>{
                     </div>
                   </div>
               </div>
-              {(data!=undefined && data.cards.length != 0) ? (
+              {(data!=undefined && data.cards!= null && data.cards.length != 0) ? (
                 <div className="card-body">
                 <div className="row g-3 mb-3 border-bottom">
                 <div className="row g-3">
@@ -305,7 +305,7 @@ const CheckoutView = props =>{
                         type="text"
                         className="form-control"
                         placeholder="Name on card"
-                        value={(data!=undefined && data.cards.length != 0) ? data.cards[0]["name"] : ""}
+                        value={(data!=undefined && data.cards!= null && data.cards.length != 0) ? data.cards[0]["name"] : ""}
                         onChange={(e) => setName(e.target.value)}
                       />
                     </div>
@@ -314,7 +314,7 @@ const CheckoutView = props =>{
                         type="number"
                         className="form-control"
                         placeholder="Card number"
-                        value={(data!=undefined && data.cards.length != 0) ? data.cards[0]["number"] : ""}
+                        value={(data!=undefined && data.cards!= null && data.cards.length != 0) ? data.cards[0]["number"] : ""}
                         onChange={(e) => setNumber(e.target.value)}
                       />
                     </div>
@@ -323,7 +323,7 @@ const CheckoutView = props =>{
                         type="number"
                         className="form-control"
                         placeholder="Expiration month"
-                        value={(data!=undefined && data.cards.length != 0) ? data.cards[0]["month"] : ""}
+                        value={(data!=undefined && data.cards!= null && data.cards.length != 0) ? data.cards[0]["month"] : ""}
                         onChange={(e) => setMonth(e.target.value)}
                       />
                     </div>
@@ -332,7 +332,7 @@ const CheckoutView = props =>{
                         type="number"
                         className="form-control"
                         placeholder="Expiration year"
-                        value={(data!=undefined && data.cards.length != 0) ? data.cards[0]["year"] : ""}
+                        value={(data!=undefined && data.cards!= null && data.cards.length != 0) ? data.cards[0]["year"] : ""}
                         onChange={(e) => setYear(e.target.value)}
                       />
                     </div>
@@ -341,7 +341,7 @@ const CheckoutView = props =>{
                         type="number"
                         className="form-control"
                         placeholder="CVV"
-                        value={(data!=undefined && data.cards.length != 0) ? data.cards[0]["cvv"] : ""}
+                        value={(data!=undefined && data.cards!= null && data.cards.length != 0) ? data.cards[0]["cvv"] : ""}
                         onChange={(e) => setCVV(e.target.value)}
                       />
                     </div>
@@ -399,7 +399,7 @@ const CheckoutView = props =>{
               <div className="btn btn-block btn-info">
                 <button type="button" className="btn btn-block btn-info" onClick={() => {edit()}}>
                 <Link to={{
-        pathname: `/cart/${user}`,
+        pathname: `/cart`,
         state: { authenticated: true }
       }} className="btn btn-block btn-info">
                   Pay Now: <b>{total} ams </b>

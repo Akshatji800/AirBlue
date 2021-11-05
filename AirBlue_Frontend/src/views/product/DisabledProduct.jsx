@@ -8,6 +8,7 @@ import {
   useMutation,
   gql
 } from "@apollo/client";
+import { getTokens } from "../../tokens";
 const CardProductListDisabled = (props) => {
   var path = window.location.pathname
   var n = path.lastIndexOf("/");
@@ -34,7 +35,7 @@ const CardProductListDisabled = (props) => {
     const add = () => {
       addCart({variables: {
         name: product.name,
-        user: user
+        user: getTokens()
       }})
       window.location.reload(false);
     }
