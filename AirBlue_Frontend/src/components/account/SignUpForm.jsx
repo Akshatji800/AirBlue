@@ -72,7 +72,7 @@ const SignUpForm = (props) => {
   const [createUser, { data, loading, error }] = useMutation(CREATE_USER_lOGIN);
   const SubmitHandler = (e)=> {
     e.preventDefault();
-    if(password == "" && username == "" && email == "" && confirmPassword == ""){
+    if(password == "" || username == "" || email == "" || confirmPassword == ""){
       setValidate(true)
     }
     else if(password == confirmPassword){

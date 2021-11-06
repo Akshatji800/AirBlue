@@ -1,3 +1,4 @@
+from typing import DefaultDict
 from django.db import models
 from django.contrib.auth.models import User
 from django.utils.translation import gettext
@@ -261,3 +262,22 @@ class RedeemedUser(models.Model):
             verbose_name=_('User'),
         )
     redeemed = models.BooleanField()
+
+class UserItemChallenge(models.Model):
+    user = models.ForeignKey(
+        User,
+        null=True,
+        on_delete=models.CASCADE,
+        verbose_name=_('User'),
+    )
+    item = models.ManyToManyField(Items, blank=True, null=True)
+    completed = models.BooleanField(default=False)
+
+    def save(self, *args, **kwargs):
+        count = self.item.all().count()
+        print(count)
+        if count== Items.objects.all().count():
+            self.completed = True
+        else:
+            self.completed = False
+        super(UserItemChallenge, self).save(*args, **kwargs)

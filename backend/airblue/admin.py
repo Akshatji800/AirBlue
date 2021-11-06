@@ -11,6 +11,7 @@ from .models import (
     OrderProduct,
     Category,
     Miles,
+    UserItemChallenge,
     UserOrder,
     Card,
     RedeemedUser
@@ -128,3 +129,4 @@ admin.site.register(UserOrder)
 admin.site.register(CommonCoupon)
 admin.site.register(Card)
 admin.site.register(RedeemedUser)
+admin.site.register(UserItemChallenge)

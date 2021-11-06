@@ -17,6 +17,7 @@ from airblue.models import (
     ProductImage,
     ProductRemains,
     Category,
+    UserItemChallenge,
     UserOrder,
     Card,
     RedeemedUser,
@@ -47,7 +48,7 @@ class CreateUser(graphene.Mutation):
         )
         user.set_password(password)
         user.save()
-
+        UserItemChallenge.objects.create(user=user)
         return CreateUser(user=user)
 
 PRODUCT_PREFETCHES = (
@@ -485,13 +486,18 @@ class CreateOrder(graphene.Mutation):
     def mutate(root, info, input=None):
         token = jwt.decode(input.user,verify=False)
         userInstance = get_user_model().objects.get(username = token['username'])
-        length_orders = len(UserOrder.objects.all())
+        userChallenge = UserItemChallenge.objects.get(user__username = token['username'])
         order_items = UserOrder.objects.create(total=input.value)
         items = input.item.split(',')
         order_items.user.add(userInstance.id)
         for i in items:
             itemsInstance = Items.objects.get(name=i.strip())
             order_items.products.add(itemsInstance.id)
+            userChallenge.item.add(itemsInstance.id)
+            
+        #save userChallenge twice to update the many to many field
+        userChallenge.save()
+        userChallenge.save()
         order_items.save()
         return CreateOrder()
 
@@ -505,14 +511,26 @@ class UseCoupon(graphene.Mutation):
         token = jwt.decode(input.user,verify=False)
         userInstance = get_user_model().objects.get(username = token['username'])
         redeem_item  = RedeemedUser.objects.get(user=userInstance)
+
+        print(redeem_item.redeemed)
+        if(redeem_item.redeemed):
+            return None
+        
         redeem_item.redeemed = True
         redeem_item.save()
+        
+        couponInstance = CommonCoupon.objects.get(code=input.couponCode)
+
+        if(couponInstance.used):
+            return None
+
+        couponInstance.used = True
+        couponInstance.save()
+    
         miles_details = Miles.objects.get(user__username = token['username'])
         miles_details.miles = miles_details.miles + 1000
         miles_details.save()
-        couponInstance = CommonCoupon.objects.get(code=input.couponCode)
-        couponInstance.used = True
-        couponInstance.save()
+        
         return UseCoupon()
 
 class Mutation(graphene.ObjectType):
